@@ -26,6 +26,7 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
     public PubVisitsAdapter(DatabaseManager db) {
         this.db = db;
         collection = db.GetAllPubVisits();
+        collection.sort(PubVisit.comparator);
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -45,6 +46,7 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
         // Set item views based on your views and data model
         holder.pubName.setText(item.getPubName());
         holder.timestamp.setText(Conv.longDate2str(item.getTimestamp()));
+        holder.totals.setText(item.getTotalBeers() + " piv, " + item.getTotalCost() + " Kč");
 
         // Events
         holder.itemView.setOnClickListener(v -> {
@@ -69,6 +71,7 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
         // for any view that will be set as you render a row
         public TextView pubName;
         public TextView timestamp;
+        public TextView totals;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -79,6 +82,7 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
 
             pubName = itemView.findViewById(R.id.pubVisit_pubName);
             timestamp = itemView.findViewById(R.id.pubVisit_timestamp);
+            totals = itemView.findViewById(R.id.pubVisit_totals);
         }
     }
 

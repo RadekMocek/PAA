@@ -21,8 +21,9 @@
             android:id="@+id/pubVisit_pubName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="Sample pub visit"
-            android:textSize="18sp"
+            android:textSize="19sp"
             android:textStyle="bold" />
 
         <TextView
@@ -30,7 +31,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/pubVisit_pubName"
-            android:text="Timestamp" />
+            android:text="Timestamp"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/pubVisit_totals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pubVisit_pubName"
+            android:layout_alignParentEnd="true"
+            android:text="10 beers, 1000 CZK"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 

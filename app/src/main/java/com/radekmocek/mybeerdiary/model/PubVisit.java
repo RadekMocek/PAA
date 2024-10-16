@@ -1,5 +1,7 @@
 package com.radekmocek.mybeerdiary.model;
 
+import java.util.Comparator;
+
 public class PubVisit {
 
     private int id;
@@ -47,4 +49,6 @@ public class PubVisit {
     public void setTotalCost(int totalCost) {
         this.totalCost = totalCost;
     }
+
+    public static final Comparator<PubVisit> comparator = (PubVisit p1, PubVisit p2) -> Long.compare(p2.timestamp, p1.timestamp);
 }
