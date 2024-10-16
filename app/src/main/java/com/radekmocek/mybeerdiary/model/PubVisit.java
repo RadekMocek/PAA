@@ -1,12 +1,12 @@
 package com.radekmocek.mybeerdiary.model;
 
-import java.util.Date;
-
 public class PubVisit {
 
     private int id;
     private String pubName;
-    private Date timestamp;
+    private long timestamp;
+    private int totalBeers;
+    private int totalCost;
 
     public int getId() {
         return id;
@@ -24,11 +24,27 @@ public class PubVisit {
         this.pubName = pubName;
     }
 
-    public Date getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public int getTotalBeers() {
+        return totalBeers;
+    }
+
+    public void setTotalBeers(int nBeers) {
+        this.totalBeers = nBeers;
+    }
+
+    public int getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(int totalCost) {
+        this.totalCost = totalCost;
     }
 }

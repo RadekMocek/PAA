@@ -6,6 +6,9 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
     app:cardCornerRadius="8dp"
     app:cardElevation="4dp">
 
@@ -18,7 +21,16 @@
             android:id="@+id/pubVisit_pubName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sample pub visit" />
+            android:text="Sample pub visit"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/pubVisit_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pubVisit_pubName"
+            android:text="Timestamp" />
 
     </RelativeLayout>
 

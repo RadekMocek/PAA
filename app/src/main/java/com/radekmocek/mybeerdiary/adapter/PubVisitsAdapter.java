@@ -4,22 +4,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.model.PubVisit;
+import com.radekmocek.mybeerdiary.util.Conv;
+import com.radekmocek.mybeerdiary.util.DatabaseManager;
 
+import java.util.Calendar;
 import java.util.List;
 
 // https://guides.codepath.com/android/using-the-recyclerview
 public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.ViewHolder> {
 
     private final List<PubVisit> collection;
+    private final DatabaseManager db;
 
-    public PubVisitsAdapter(List<PubVisit> collection) {
-        this.collection = collection;
+    public PubVisitsAdapter(DatabaseManager db) {
+        this.db = db;
+        collection = db.GetAllPubVisits();
     }
 
     // Usually involves inflating a layout from XML and returning the holder
@@ -38,6 +44,16 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
 
         // Set item views based on your views and data model
         holder.pubName.setText(item.getPubName());
+        holder.timestamp.setText(Conv.longDate2str(item.getTimestamp()));
+
+        // Events
+        holder.itemView.setOnClickListener(v -> {
+            Toast.makeText(v.getContext(), "click", Toast.LENGTH_SHORT).show();
+        });
+        holder.itemView.setOnLongClickListener(v -> {
+            Toast.makeText(v.getContext(), "hold", Toast.LENGTH_SHORT).show();
+            return true;
+        });
     }
 
     // Returns the total count of items in the list
@@ -52,6 +68,7 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView pubName;
+        public TextView timestamp;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -61,6 +78,19 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
             super(itemView);
 
             pubName = itemView.findViewById(R.id.pubVisit_pubName);
+            timestamp = itemView.findViewById(R.id.pubVisit_timestamp);
         }
+    }
+
+    // Data manipulation functions
+    public void AddPubVisit(String name) {
+        PubVisit p = new PubVisit();
+        p.setPubName(name);
+        p.setTimestamp(Calendar.getInstance().getTime().getTime());
+        p.setTotalBeers(0);
+        p.setTotalCost(0);
+        db.AddPubVisit(p);
+        collection.add(0, p);
+        notifyItemInserted(0);
     }
 }
