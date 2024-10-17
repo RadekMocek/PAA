@@ -7,24 +7,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.radekmocek.mybeerdiary.R;
+import com.radekmocek.mybeerdiary.fragment.EditPubVisitDialogFragment;
 import com.radekmocek.mybeerdiary.model.PubVisit;
 import com.radekmocek.mybeerdiary.util.Conv;
 import com.radekmocek.mybeerdiary.util.DatabaseManager;
 
-import java.util.Calendar;
 import java.util.List;
 
 // https://guides.codepath.com/android/using-the-recyclerview
 public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.ViewHolder> {
 
-    private final List<PubVisit> collection;
     private final DatabaseManager db;
+    private final FragmentManager fragmentManager;
+    private final List<PubVisit> collection;
 
-    public PubVisitsAdapter(DatabaseManager db) {
+    public PubVisitsAdapter(DatabaseManager db, FragmentManager fragmentManager) {
         this.db = db;
+        this.fragmentManager = fragmentManager;
+
         collection = db.GetAllPubVisits();
         collection.sort(PubVisit.comparator);
     }
@@ -53,7 +57,7 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
             Toast.makeText(v.getContext(), "click", Toast.LENGTH_SHORT).show();
         });
         holder.itemView.setOnLongClickListener(v -> {
-            Toast.makeText(v.getContext(), "hold", Toast.LENGTH_SHORT).show();
+            EditPubVisitDialogFragment.newInstance(item, position).show(fragmentManager, EditPubVisitDialogFragment.TAG);
             return true;
         });
     }
@@ -87,14 +91,13 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
     }
 
     // Data manipulation functions
-    public void AddPubVisit(String name) {
-        PubVisit p = new PubVisit();
-        p.setPubName(name);
-        p.setTimestamp(Calendar.getInstance().getTime().getTime());
-        p.setTotalBeers(0);
-        p.setTotalCost(0);
-        db.AddPubVisit(p);
+    public void AddPubVisit(PubVisit p) {
         collection.add(0, p);
         notifyItemInserted(0);
+    }
+
+    public void EditPubVisitPubName(String name, int rvPos) {
+        collection.get(rvPos).setPubName(name);
+        notifyItemChanged(rvPos);
     }
 }

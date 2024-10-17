@@ -56,4 +56,10 @@ public class DatabaseManager {
         cv.put(DatabaseHelper.COL_TOTAL_COST, p.getTotalCost());
         db.insert(DatabaseHelper.TABLE_VISITS, null, cv);
     }
+
+    public void EditPubVisitPubName(int id, String name) {
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseHelper.COL_NAME, name);
+        db.update(DatabaseHelper.TABLE_VISITS, cv, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
+    }
 }
