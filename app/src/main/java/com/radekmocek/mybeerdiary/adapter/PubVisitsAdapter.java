@@ -91,13 +91,18 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
     }
 
     // Data manipulation functions
-    public void AddPubVisit(PubVisit p) {
+    public void addPubVisit(PubVisit p) {
         collection.add(0, p);
         notifyItemInserted(0);
     }
 
-    public void EditPubVisitPubName(String name, int rvPos) {
+    public void editPubVisitPubName(String name, int rvPos) {
         collection.get(rvPos).setPubName(name);
         notifyItemChanged(rvPos);
+    }
+
+    public void deletePubVisit(int rvPos) {
+        collection.remove(rvPos);
+        notifyItemRemoved(rvPos);
     }
 }

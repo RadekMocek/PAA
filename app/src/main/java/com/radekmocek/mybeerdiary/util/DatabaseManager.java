@@ -48,7 +48,7 @@ public class DatabaseManager {
         return taskList;
     }
 
-    public void AddPubVisit(PubVisit p) {
+    public void addPubVisit(PubVisit p) {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COL_NAME, p.getPubName());
         cv.put(DatabaseHelper.COL_TIMESTAMP, p.getTimestamp());
@@ -57,9 +57,13 @@ public class DatabaseManager {
         db.insert(DatabaseHelper.TABLE_VISITS, null, cv);
     }
 
-    public void EditPubVisitPubName(int id, String name) {
+    public void editPubVisitPubName(int id, String name) {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COL_NAME, name);
         db.update(DatabaseHelper.TABLE_VISITS, cv, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
+    }
+
+    public void deletePubVisit(int id) {
+        db.delete(DatabaseHelper.TABLE_VISITS, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
     }
 }

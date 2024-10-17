@@ -1,5 +1,6 @@
 package com.radekmocek.mybeerdiary.fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -86,12 +87,26 @@ public class EditPubVisitDialogFragment extends DialogFragment {
             }
         });
 
+        MainActivity mainActivity = (MainActivity) requireActivity();
+
         buttonOK.setOnClickListener(v -> {
-            ((MainActivity) requireActivity()).editPubVisitName(id, String.valueOf(editText.getText()), rvPos);
+            mainActivity.editPubVisitName(id, String.valueOf(editText.getText()), rvPos);
             dismiss();
         });
 
         buttonCancel.setOnClickListener(v -> dismiss());
-        buttonDelete.setOnClickListener(v -> dismiss());
+
+        buttonDelete.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setCancelable(true);
+            builder.setTitle("Smazat návštěvu hospody / akce?");
+            builder.setMessage("Opravdu si přejete smazat \"" + name + "\"?");
+            builder.setPositiveButton("Smazat", (dialog, which) -> mainActivity.deletePubVisit(id, rvPos));
+            builder.setNegativeButton("Zrušit", (dialog, which) -> {
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            dismiss();
+        });
     }
 }
