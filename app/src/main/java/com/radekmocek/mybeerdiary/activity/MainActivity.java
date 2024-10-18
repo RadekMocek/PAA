@@ -1,5 +1,6 @@
 package com.radekmocek.mybeerdiary.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         db = new DatabaseManager(this);
         layoutManager = new LinearLayoutManager(this);
         fragmentManager = getSupportFragmentManager();
-        adPubVisits = new PubVisitsAdapter(db, fragmentManager);
+        adPubVisits = new PubVisitsAdapter(this, db, fragmentManager);
 
         RecyclerView rvPubVisits = findViewById(R.id.recyclerView_pubVisits);
         rvPubVisits.setAdapter(adPubVisits);
@@ -61,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
     public void deletePubVisit(int id, int rvPos) {
         db.deletePubVisit(id);
         adPubVisits.deletePubVisit(rvPos);
+    }
+
+    public void changeToBeersActivity(PubVisit p) {
+        Intent intent = new Intent(this, BeersActivity.class);
+        intent.putExtra("pubVisit", p);
+        startActivity(intent);
     }
 
     @Override

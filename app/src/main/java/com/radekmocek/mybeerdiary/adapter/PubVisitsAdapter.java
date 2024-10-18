@@ -4,13 +4,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.radekmocek.mybeerdiary.R;
+import com.radekmocek.mybeerdiary.activity.MainActivity;
 import com.radekmocek.mybeerdiary.fragment.EditPubVisitDialogFragment;
 import com.radekmocek.mybeerdiary.model.PubVisit;
 import com.radekmocek.mybeerdiary.util.Conv;
@@ -21,12 +21,12 @@ import java.util.List;
 // https://guides.codepath.com/android/using-the-recyclerview
 public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.ViewHolder> {
 
-    private final DatabaseManager db;
+    private final MainActivity mainActivity;
     private final FragmentManager fragmentManager;
     private final List<PubVisit> collection;
 
-    public PubVisitsAdapter(DatabaseManager db, FragmentManager fragmentManager) {
-        this.db = db;
+    public PubVisitsAdapter(MainActivity mainActivity, DatabaseManager db, FragmentManager fragmentManager) {
+        this.mainActivity = mainActivity;
         this.fragmentManager = fragmentManager;
 
         collection = db.GetAllPubVisits();
@@ -53,9 +53,7 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
         holder.totals.setText(item.getTotalBeers() + " piv, " + item.getTotalCost() + " Kč");
 
         // Events
-        holder.itemView.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(), "click", Toast.LENGTH_SHORT).show();
-        });
+        holder.itemView.setOnClickListener(v -> mainActivity.changeToBeersActivity(item));
         holder.itemView.setOnLongClickListener(v -> {
             EditPubVisitDialogFragment.newInstance(item, position).show(fragmentManager, EditPubVisitDialogFragment.TAG);
             return true;

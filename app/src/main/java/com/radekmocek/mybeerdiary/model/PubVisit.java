@@ -1,8 +1,9 @@
 package com.radekmocek.mybeerdiary.model;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class PubVisit {
+public class PubVisit implements Serializable {
 
     private int id;
     private String pubName;
