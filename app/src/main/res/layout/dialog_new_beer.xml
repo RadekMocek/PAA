@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:text="Další pivo"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -19,13 +19,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/newBeer_header"
-        android:layout_marginVertical="4dp"
+        android:layout_marginBottom="4dp"
         android:hint="Pivovar – název"
         android:paddingHorizontal="12dp"
         app:endIconDrawable="@drawable/ico_factory"
         app:endIconMode="custom">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newBeer_ediTextBreweryName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -51,7 +52,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/newBeer_textFieldDescription"
-        android:layout_marginVertical="4dp" />
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/newBeer_toggleGroup"
@@ -132,8 +134,7 @@
         android:layout_below="@id/newBeer_divider_1"
         android:layout_centerHorizontal="true"
         android:text="⇝"
-        android:textSize="44dp"
-        android:textStyle="bold" />
+        android:textSize="44dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/newBeer_textFieldABV"
@@ -163,15 +164,15 @@
         android:paddingHorizontal="12dp"
         app:endIconDrawable="@drawable/ico_coins"
         app:endIconMode="custom"
-        app:suffixText="halo">
+        app:suffixText="Kč">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/newBeer_fabAdd"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/newBeer_eFabAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/newBeer_textFieldPrice"

@@ -7,6 +7,14 @@
 
     <include layout="@layout/toolbar" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_beers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:nestedScrollingEnabled="true"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_addBeer"
         android:layout_width="wrap_content"

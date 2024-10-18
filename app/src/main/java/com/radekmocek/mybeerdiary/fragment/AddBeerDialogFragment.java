@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.radekmocek.mybeerdiary.R;
+import com.radekmocek.mybeerdiary.activity.BeersActivity;
 
 public class AddBeerDialogFragment extends DialogFragment {
 
@@ -32,5 +35,13 @@ public class AddBeerDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        EditText editTextBreweryName = view.findViewById(R.id.newBeer_ediTextBreweryName);
+        ExtendedFloatingActionButton eFabOK = view.findViewById(R.id.newBeer_eFabAdd);
+
+        eFabOK.setOnClickListener(v -> {
+            ((BeersActivity) requireActivity()).addBeer(String.valueOf(editTextBreweryName.getText()));
+            dismiss();
+        });
     }
 }

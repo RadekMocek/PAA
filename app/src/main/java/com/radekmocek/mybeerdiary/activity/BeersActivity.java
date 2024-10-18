@@ -5,14 +5,22 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.radekmocek.mybeerdiary.R;
+import com.radekmocek.mybeerdiary.adapter.BeersAdapter;
 import com.radekmocek.mybeerdiary.fragment.AddBeerDialogFragment;
+import com.radekmocek.mybeerdiary.model.Beer;
 import com.radekmocek.mybeerdiary.model.PubVisit;
+import com.radekmocek.mybeerdiary.util.DatabaseManager;
 
 public class BeersActivity extends AppCompatActivity {
 
+    private DatabaseManager db;
+    private LinearLayoutManager layoutManager;
     private FragmentManager fragmentManager;
+    private BeersAdapter adBeers;
 
     private PubVisit pubVisit;
 
@@ -28,8 +36,21 @@ public class BeersActivity extends AppCompatActivity {
 
         ((Toolbar) findViewById(R.id.toolbar)).setTitle(pubVisit.getPubName());
 
+        //db = new DatabaseManager(this);
+        layoutManager = new LinearLayoutManager(this);
         fragmentManager = getSupportFragmentManager();
+        adBeers = new BeersAdapter();
+
+        RecyclerView rvBeers = findViewById(R.id.recyclerView_beers);
+        rvBeers.setAdapter(adBeers);
+        rvBeers.setLayoutManager(layoutManager);
 
         findViewById(R.id.fab_addBeer).setOnClickListener(v -> AddBeerDialogFragment.newInstance().show(fragmentManager, AddBeerDialogFragment.TAG));
+    }
+
+    public void addBeer(String breweryName) {
+        Beer b = new Beer();
+        b.setBreweryName(breweryName);
+        adBeers.addBeer(b);
     }
 }
