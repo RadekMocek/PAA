@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// https://stackoverflow.com/a/24632346/19136597
+// https://stackoverflow.com/a/24632346
 public class DecimalDigitsInputFilter implements InputFilter {
     private final Pattern mPattern;
 

@@ -132,6 +132,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/newBeer_textViewArrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/newBeer_divider_1"
@@ -159,11 +160,19 @@
             android:inputType="numberDecimal" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <CheckBox
+        android:id="@+id/newBeer_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newBeer_textFieldEPM"
+        android:layout_centerHorizontal="true"
+        android:text="Odhadnout procenta alkoholu ze stupňovitosti" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/newBeer_textFieldPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/newBeer_textFieldABV"
+        android:layout_below="@id/newBeer_checkbox"
         android:layout_marginVertical="4dp"
         android:hint="Cena"
         android:paddingHorizontal="12dp"

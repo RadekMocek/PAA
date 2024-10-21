@@ -1,18 +1,27 @@
 package com.radekmocek.mybeerdiary.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.slider.Slider;
+import com.google.android.material.textfield.TextInputLayout;
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.activity.BeersActivity;
+import com.radekmocek.mybeerdiary.util.Conv;
 import com.radekmocek.mybeerdiary.util.DecimalDigitsInputFilter;
 
 public class AddBeerDialogFragment extends DialogFragment {
@@ -43,10 +52,58 @@ public class AddBeerDialogFragment extends DialogFragment {
         EditText editTextEPM = view.findViewById(R.id.newBeer_ediTextEPM);
         EditText editTextABV = view.findViewById(R.id.newBeer_ediTextABV);
         EditText editTextPrice = view.findViewById(R.id.newBeer_ediTextPrice);
+        TextView textViewArrow = view.findViewById(R.id.newBeer_textViewArrow);
+
+        TextInputLayout textFieldABV = view.findViewById(R.id.newBeer_textFieldABV);
+
+        MaterialButtonToggleGroup tg = view.findViewById(R.id.newBeer_toggleGroup);
+        Button tgButton0 = view.findViewById(R.id.newBeer_toggleGroup_0);
+        Button tgButton1 = view.findViewById(R.id.newBeer_toggleGroup_1);
+        Button tgButton2 = view.findViewById(R.id.newBeer_toggleGroup_2);
+
+        Slider slider = view.findViewById(R.id.newBeer_slider);
+
+        CheckBox checkBox = view.findViewById(R.id.newBeer_checkbox);
+
         ExtendedFloatingActionButton eFabOK = view.findViewById(R.id.newBeer_eFabAdd);
 
         editTextEPM.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2, 2)});
+        editTextEPM.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (checkBox.isChecked()) {
+                    editTextABV.setText(Conv.EPMEditText2EBMEditText(editTextEPM.getText().toString()));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         editTextABV.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2, 2)});
+        textViewArrow.setEnabled(false);
+
+        tg.check(tgButton1.getId());
+
+        slider.setValue(0.5f);
+        slider.addOnChangeListener((slider1, value, fromUser) -> {
+            tgButton2.setText(Conv.nBeerLitres2str(value));
+            tg.check(tgButton2.getId());
+        });
+
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            textViewArrow.setEnabled(isChecked);
+            textFieldABV.setEnabled(!isChecked);
+            if (isChecked) {
+                editTextABV.setText(Conv.EPMEditText2EBMEditText(editTextEPM.getText().toString()));
+            }
+        });
 
         eFabOK.setOnClickListener(v -> {
             ((BeersActivity) requireActivity()).addBeer(String.valueOf(editTextBreweryName.getText()));
