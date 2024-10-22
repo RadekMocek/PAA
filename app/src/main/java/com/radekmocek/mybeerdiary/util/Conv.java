@@ -26,7 +26,10 @@ public final class Conv {
     }
 
     public static String nBeerLitres2str(float f) {
-        int decilitres = Math.round(f * 10);
+        return nBeerDecilitres2str(Math.round(f * 10));
+    }
+
+    public static String nBeerDecilitres2str(int decilitres) {
         switch (decilitres) {
             case 1:
                 return "Deci";

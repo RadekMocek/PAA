@@ -21,8 +21,11 @@ import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputLayout;
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.activity.BeersActivity;
+import com.radekmocek.mybeerdiary.model.Beer;
 import com.radekmocek.mybeerdiary.util.Conv;
 import com.radekmocek.mybeerdiary.util.DecimalDigitsInputFilter;
+
+import java.util.Calendar;
 
 public class AddBeerDialogFragment extends DialogFragment {
 
@@ -71,7 +74,6 @@ public class AddBeerDialogFragment extends DialogFragment {
         editTextEPM.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -83,7 +85,6 @@ public class AddBeerDialogFragment extends DialogFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         editTextABV.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2, 2)});
@@ -91,7 +92,7 @@ public class AddBeerDialogFragment extends DialogFragment {
 
         tg.check(tgButton1.getId());
 
-        slider.setValue(0.5f);
+        slider.setValue(0.4f);
         slider.addOnChangeListener((slider1, value, fromUser) -> {
             tgButton2.setText(Conv.nBeerLitres2str(value));
             tg.check(tgButton2.getId());
@@ -106,7 +107,47 @@ public class AddBeerDialogFragment extends DialogFragment {
         });
 
         eFabOK.setOnClickListener(v -> {
-            ((BeersActivity) requireActivity()).addBeer(String.valueOf(editTextBreweryName.getText()));
+            Beer b = new Beer();
+            b.setBreweryName(editTextBreweryName.getText().toString());
+            b.setDescription(editTextDescription.getText().toString());
+            b.setTimestamp(Calendar.getInstance().getTime().getTime());
+
+            int decilitres;
+            if (tg.getCheckedButtonId() == tgButton0.getId()) {
+                decilitres = 3;
+            } else if (tg.getCheckedButtonId() == tgButton1.getId()) {
+                decilitres = 5;
+            } else {
+                decilitres = Math.round(slider.getValue() * 10);
+            }
+            b.setDecilitres(decilitres);
+
+            double EPM;
+            try {
+                EPM = Double.parseDouble(editTextEPM.getText().toString());
+            } catch (Exception e) {
+                EPM = 12d;
+            }
+            b.setEPM(EPM);
+
+            double ABV;
+            try {
+                ABV = Double.parseDouble(editTextABV.getText().toString());
+            } catch (Exception e) {
+                ABV = 4.4d;
+            }
+            b.setABV(ABV);
+
+            int price;
+            try {
+                price = Integer.parseInt(editTextPrice.getText().toString());
+            } catch (Exception e) {
+                price = 0;
+            }
+            b.setPrice(price);
+
+            ((BeersActivity) requireActivity()).addBeer(b);
+
             dismiss();
         });
     }

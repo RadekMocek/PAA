@@ -11,4 +11,13 @@
         <item name="android:windowBackground">?attr/colorSurface</item>
     </style>
 
+    <style name="BeerItemIcon">
+        <item name="android:scaleX">0.78</item>
+        <item name="android:scaleY">0.78</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:alpha">0.69</item>
+        <item name="android:layout_marginEnd">4dp</item>
+    </style>
+
 </resources>

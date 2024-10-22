@@ -18,13 +18,88 @@
         android:padding="8dp">
 
         <TextView
+            android:id="@+id/beer_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16. 10. 2024 – 21:48"
+            android:textSize="13sp" />
+
+        <TextView
             android:id="@+id/beer_breweryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/beer_timestamp"
             android:layout_marginBottom="4dp"
-            android:text="Brewery"
-            android:textSize="20sp"
+            android:text="OVIPISTÁN"
+            android:textSize="20.5sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/beer_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/beer_breweryName"
+            android:text="PRZIDENT - světlý ležák"
+            android:textSize="17.0sp" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/beer_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/beer_description"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/beer_EPM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/beer_divider"
+            android:layout_alignParentEnd="true"
+            android:text="12°"
+            android:textSize="15.5sp" />
+
+        <TextView
+            android:id="@+id/beer_ABV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/beer_EPM"
+            android:layout_alignParentEnd="true"
+            android:text="5.0 %"
+            android:textSize="15.5sp" />
+
+        <ImageView
+            android:id="@+id/beer_ico_decilitres"
+            style="@style/BeerItemIcon"
+            android:layout_below="@id/beer_divider"
+            android:contentDescription=""
+            android:src="@drawable/ico_measure_full" />
+
+        <TextView
+            android:id="@+id/beer_decilitres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/beer_divider"
+            android:layout_toEndOf="@id/beer_ico_decilitres"
+            android:text="Velké"
+            android:textSize="15.5sp" />
+
+        <ImageView
+            android:id="@+id/beer_ico_price"
+            style="@style/BeerItemIcon"
+            android:layout_below="@id/beer_decilitres"
+            android:layout_marginStart="1.2dp"
+            android:contentDescription=""
+            android:src="@drawable/ico_coins" />
+
+        <TextView
+            android:id="@+id/beer_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/beer_decilitres"
+            android:layout_toEndOf="@id/beer_ico_price"
+            android:text="65 Kč"
+            android:textSize="15.5sp" />
 
     </RelativeLayout>
 

@@ -48,9 +48,7 @@ public class BeersActivity extends AppCompatActivity {
         findViewById(R.id.fab_addBeer).setOnClickListener(v -> AddBeerDialogFragment.newInstance().show(fragmentManager, AddBeerDialogFragment.TAG));
     }
 
-    public void addBeer(String breweryName) {
-        Beer b = new Beer();
-        b.setBreweryName(breweryName);
+    public void addBeer(Beer b) {
         adBeers.addBeer(b);
     }
 }
