@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.activity.BeersActivity;
 import com.radekmocek.mybeerdiary.model.Beer;
+import com.radekmocek.mybeerdiary.model.PubVisit;
 import com.radekmocek.mybeerdiary.util.Conv;
 import com.radekmocek.mybeerdiary.util.DecimalDigitsInputFilter;
 
@@ -31,8 +32,16 @@ public class AddBeerDialogFragment extends DialogFragment {
 
     public static final String TAG = "AddBeerDialogFragment";
 
-    public static AddBeerDialogFragment newInstance() {
-        return new AddBeerDialogFragment();
+    private static final String pubVisitIDBundleKey = "pubVisitID";
+
+    public static AddBeerDialogFragment newInstance(PubVisit p) {
+        AddBeerDialogFragment f = new AddBeerDialogFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(pubVisitIDBundleKey, p.getId());
+        f.setArguments(args);
+
+        return f;
     }
 
     @Override
@@ -49,6 +58,14 @@ public class AddBeerDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Bundle args = getArguments();
+        int pubVisitID;
+        if (args != null) {
+            pubVisitID = args.getInt(pubVisitIDBundleKey);
+        } else {
+            pubVisitID = -1;
+        }
 
         EditText editTextBreweryName = view.findViewById(R.id.newBeer_ediTextBreweryName);
         EditText editTextDescription = view.findViewById(R.id.newBeer_editTextDescription);
@@ -108,6 +125,8 @@ public class AddBeerDialogFragment extends DialogFragment {
 
         eFabOK.setOnClickListener(v -> {
             Beer b = new Beer();
+            b.setPubVisitID(pubVisitID);
+
             b.setBreweryName(editTextBreweryName.getText().toString());
             b.setDescription(editTextDescription.getText().toString());
             b.setTimestamp(Calendar.getInstance().getTime().getTime());

@@ -3,6 +3,7 @@ package com.radekmocek.mybeerdiary.model;
 public class Beer {
 
     private int id;
+    private int pubVisitID;
     private String breweryName;
     private String description;
     private long timestamp;
@@ -17,6 +18,14 @@ public class Beer {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getPubVisitID() {
+        return pubVisitID;
+    }
+
+    public void setPubVisitID(int pubVisitID) {
+        this.pubVisitID = pubVisitID;
     }
 
     public String getBreweryName() {

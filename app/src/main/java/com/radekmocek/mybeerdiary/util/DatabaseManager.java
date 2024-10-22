@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.radekmocek.mybeerdiary.model.Beer;
 import com.radekmocek.mybeerdiary.model.PubVisit;
 
 import java.util.ArrayList;
@@ -65,5 +66,18 @@ public class DatabaseManager {
 
     public void deletePubVisit(int id) {
         db.delete(DatabaseHelper.TABLE_VISITS, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
+    }
+
+    public void addBeer(Beer b) {
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseHelper.COL_VISIT_ID, b.getPubVisitID());
+        cv.put(DatabaseHelper.COL_NAME, b.getBreweryName());
+        cv.put(DatabaseHelper.COL_DESCRIPTION, b.getDescription());
+        cv.put(DatabaseHelper.COL_TIMESTAMP, b.getTimestamp());
+        cv.put(DatabaseHelper.COL_DECILITRES, b.getDecilitres());
+        cv.put(DatabaseHelper.COL_EPM, b.getEPM());
+        cv.put(DatabaseHelper.COL_ABV, b.getABV());
+        cv.put(DatabaseHelper.COL_PRICE, b.getPrice());
+        db.insert(DatabaseHelper.TABLE_BEERS, null, cv);
     }
 }
