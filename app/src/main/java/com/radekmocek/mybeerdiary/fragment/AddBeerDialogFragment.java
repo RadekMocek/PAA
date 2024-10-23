@@ -18,11 +18,13 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.slider.Slider;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.activity.BeersActivity;
 import com.radekmocek.mybeerdiary.model.Beer;
 import com.radekmocek.mybeerdiary.model.PubVisit;
+import com.radekmocek.mybeerdiary.util.Const;
 import com.radekmocek.mybeerdiary.util.Conv;
 import com.radekmocek.mybeerdiary.util.DecimalDigitsInputFilter;
 
@@ -67,12 +69,14 @@ public class AddBeerDialogFragment extends DialogFragment {
             pubVisitID = -1;
         }
 
-        EditText editTextBreweryName = view.findViewById(R.id.newBeer_ediTextBreweryName);
+        MaterialAutoCompleteTextView editTextBreweryName = view.findViewById(R.id.newBeer_ediTextBreweryName);
         EditText editTextDescription = view.findViewById(R.id.newBeer_editTextDescription);
         EditText editTextEPM = view.findViewById(R.id.newBeer_ediTextEPM);
         EditText editTextABV = view.findViewById(R.id.newBeer_ediTextABV);
         EditText editTextPrice = view.findViewById(R.id.newBeer_ediTextPrice);
         TextView textViewArrow = view.findViewById(R.id.newBeer_textViewArrow);
+
+        editTextBreweryName.setSimpleItems(Const.BREWERIES);
 
         TextInputLayout textFieldABV = view.findViewById(R.id.newBeer_textFieldABV);
 

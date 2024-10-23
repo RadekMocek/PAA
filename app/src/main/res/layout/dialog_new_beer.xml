@@ -25,8 +25,9 @@
         app:endIconDrawable="@drawable/ico_factory"
         app:endIconMode="custom">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/newBeer_ediTextBreweryName"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
