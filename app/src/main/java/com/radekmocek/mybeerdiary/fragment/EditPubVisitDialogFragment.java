@@ -57,7 +57,7 @@ public class EditPubVisitDialogFragment extends DialogFragment {
         int rvPos;
         String name;
         if (args != null) {
-            id = args.getInt(idBundleKey);
+            id = args.getLong(idBundleKey);
             name = args.getString(pubNameBundleKey);
             rvPos = args.getInt(rvPosBundleKey);
         } else {

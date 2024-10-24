@@ -1,6 +1,5 @@
 package com.radekmocek.mybeerdiary.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.radekmocek.mybeerdiary.R;
+import com.radekmocek.mybeerdiary.fragment.EditBeerDialogFragment;
 import com.radekmocek.mybeerdiary.model.Beer;
 import com.radekmocek.mybeerdiary.util.Conv;
 import com.radekmocek.mybeerdiary.util.DatabaseManager;
@@ -75,9 +75,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
 
         // Events
         holder.itemView.setOnLongClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            EditBeerDialogFragment.newInstance().show(fragmentManager, EditBeerDialogFragment.TAG);
             return true;
         });
     }
