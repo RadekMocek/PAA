@@ -75,7 +75,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
 
         // Events
         holder.itemView.setOnLongClickListener(v -> {
-            EditBeerDialogFragment.newInstance().show(fragmentManager, EditBeerDialogFragment.TAG);
+            EditBeerDialogFragment.newInstance(item, position).show(fragmentManager, EditBeerDialogFragment.TAG);
             return true;
         });
     }
@@ -111,9 +111,10 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
     }
 
     // Data manipulation functions
-    public void addBeer(Beer b) {
+    public int addBeer(Beer b) {
         int len = collection.size();
         collection.add(b);
         notifyItemInserted(len);
+        return len + 1;
     }
 }

@@ -95,26 +95,27 @@ public class DatabaseManager {
         return collection;
     }
 
-    public void addBeer(Beer b, PubVisit p) {
-        // Add beer to TABLE_BEERS
-        ContentValues cv = new ContentValues();
-        cv.put(DatabaseHelper.COL_VISIT_ID, b.getPubVisitID());
-        cv.put(DatabaseHelper.COL_NAME, b.getBreweryName());
-        cv.put(DatabaseHelper.COL_DESCRIPTION, b.getDescription());
-        cv.put(DatabaseHelper.COL_TIMESTAMP, b.getTimestamp());
-        cv.put(DatabaseHelper.COL_DECILITRES, b.getDecilitres());
-        cv.put(DatabaseHelper.COL_EPM, b.getEPM());
-        cv.put(DatabaseHelper.COL_ABV, b.getABV());
-        cv.put(DatabaseHelper.COL_PRICE, b.getPrice());
-        db.insert(DatabaseHelper.TABLE_BEERS, null, cv);
+    public long addBeer(Beer b, PubVisit p) {
+        // Prepare Beer
+        ContentValues cvB = new ContentValues();
+        cvB.put(DatabaseHelper.COL_VISIT_ID, b.getPubVisitID());
+        cvB.put(DatabaseHelper.COL_NAME, b.getBreweryName());
+        cvB.put(DatabaseHelper.COL_DESCRIPTION, b.getDescription());
+        cvB.put(DatabaseHelper.COL_TIMESTAMP, b.getTimestamp());
+        cvB.put(DatabaseHelper.COL_DECILITRES, b.getDecilitres());
+        cvB.put(DatabaseHelper.COL_EPM, b.getEPM());
+        cvB.put(DatabaseHelper.COL_ABV, b.getABV());
+        cvB.put(DatabaseHelper.COL_PRICE, b.getPrice());
         // Edit totals in TABLE_VISITS
         int newTotalBeers = p.getTotalBeers() + 1;
         int newTotalCost = p.getTotalCost() + b.getPrice();
-        cv = new ContentValues();
-        cv.put(DatabaseHelper.COL_TOTAL_BEERS, newTotalBeers);
-        cv.put(DatabaseHelper.COL_TOTAL_COST, newTotalCost);
-        db.update(DatabaseHelper.TABLE_VISITS, cv, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(p.getId())});
+        ContentValues cvPV = new ContentValues();
+        cvPV.put(DatabaseHelper.COL_TOTAL_BEERS, newTotalBeers);
+        cvPV.put(DatabaseHelper.COL_TOTAL_COST, newTotalCost);
+        db.update(DatabaseHelper.TABLE_VISITS, cvPV, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(p.getId())});
         p.setTotalBeers(newTotalBeers);
         p.setTotalCost(newTotalCost);
+        // Add Beer to TABLE_BEERS
+        return db.insert(DatabaseHelper.TABLE_BEERS, null, cvB);
     }
 }

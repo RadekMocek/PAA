@@ -12,16 +12,26 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.radekmocek.mybeerdiary.R;
+import com.radekmocek.mybeerdiary.activity.BeersActivity;
+import com.radekmocek.mybeerdiary.model.Beer;
+import com.radekmocek.mybeerdiary.util.Const;
+
+import java.util.Calendar;
 
 public class EditBeerDialogFragment extends DialogFragment {
 
     public static final String TAG = "EditBeerDialogFragment";
 
-    public static EditBeerDialogFragment newInstance() {
+    private static final String beerBundleKey = "beer";
+    private static final String rvPosBundleKey = "recyclerViewPosition";
+
+    public static EditBeerDialogFragment newInstance(Beer b, int rvPos) {
         EditBeerDialogFragment f = new EditBeerDialogFragment();
 
-        //Bundle args = new Bundle();
-        //f.setArguments(args);
+        Bundle args = new Bundle();
+        args.putSerializable(beerBundleKey, b);
+        args.putInt(rvPosBundleKey, rvPos);
+        f.setArguments(args);
 
         return f;
     }
@@ -41,10 +51,46 @@ public class EditBeerDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Bundle args = getArguments();
+        Beer b;
+        int rvPos;
+        if (args != null) {
+            b = (Beer) args.getSerializable(beerBundleKey);
+            rvPos = args.getInt(rvPosBundleKey);
+        } else {
+            b = null;
+            rvPos = -1;
+        }
+
         TextView textView = view.findViewById(R.id.editBeer_header);
         ExtendedFloatingActionButton eFabRepeat = view.findViewById(R.id.editBeer_eFabRepeat);
         ExtendedFloatingActionButton eFabEdit = view.findViewById(R.id.editBeer_eFabEdit);
         Button buttonDismiss = view.findViewById(R.id.editBeer_buttonDismiss);
+
+        if (b != null) {
+            String breweryName = b.getBreweryName();
+            String headerToShow = (!breweryName.isEmpty()) ? breweryName : "Pivo";
+            String description = b.getDescription();
+            if (!description.isEmpty()) headerToShow += ": " + description;
+            if (headerToShow.length() > Const.MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS) {
+                headerToShow = headerToShow.substring(0, Const.MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS);
+            }
+            textView.setText(headerToShow);
+        }
+
+        eFabRepeat.setOnClickListener(v -> {
+            if (b != null) {
+                Beer newB = b.cloneWithoutIDAndTimestamp();
+                newB.setTimestamp(Calendar.getInstance().getTime().getTime());
+                ((BeersActivity) requireActivity()).addBeer(newB);
+            }
+            dismiss();
+        });
+
+        eFabEdit.setOnClickListener(v -> {
+            AddBeerDialogFragment.newInstanceEditMode(b).show(getParentFragmentManager(), AddBeerDialogFragment.TAG);
+            dismiss();
+        });
 
         buttonDismiss.setOnClickListener(v -> dismiss());
     }

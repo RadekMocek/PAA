@@ -45,11 +45,13 @@ public class BeersActivity extends AppCompatActivity {
         rvBeers.setAdapter(adBeers);
         rvBeers.setLayoutManager(layoutManager);
 
-        findViewById(R.id.fab_addBeer).setOnClickListener(v -> AddBeerDialogFragment.newInstance(pubVisit).show(fragmentManager, AddBeerDialogFragment.TAG));
+        findViewById(R.id.fab_addBeer).setOnClickListener(v -> AddBeerDialogFragment.newInstanceAddMode(pubVisit).show(fragmentManager, AddBeerDialogFragment.TAG));
     }
 
     public void addBeer(Beer b) {
-        db.addBeer(b, pubVisit);
-        adBeers.addBeer(b);
+        long id = db.addBeer(b, pubVisit);
+        b.setId(id);
+        int rvPos = adBeers.addBeer(b);
+        layoutManager.scrollToPosition(rvPos);
     }
 }

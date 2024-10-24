@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="12dp"
-        android:text="Editace piva"
+        android:text="Pivo"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -23,7 +23,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="9dp"
         android:text="Znovu"
-        app:icon="@drawable/ico_beer_tap" />
+        app:icon="@drawable/ico_repeat" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/editBeer_eFabEdit"
@@ -44,6 +44,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
+        android:layout_marginBottom="7dp"
         android:text="Zavřít" />
 
 </RelativeLayout>

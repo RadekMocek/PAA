@@ -1,8 +1,9 @@
 package com.radekmocek.mybeerdiary.model;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class Beer {
+public class Beer implements Serializable {
 
     private long id;
     private long pubVisitID;
@@ -13,6 +14,18 @@ public class Beer {
     private double EPM;
     private double ABV;
     private int price;
+
+    public Beer cloneWithoutIDAndTimestamp() {
+        Beer b2 = new Beer();
+        b2.pubVisitID = this.pubVisitID;
+        b2.breweryName = this.breweryName;
+        b2.description = this.description;
+        b2.decilitres = this.decilitres;
+        b2.EPM = this.EPM;
+        b2.ABV = this.ABV;
+        b2.price = this.price;
+        return b2;
+    }
 
     public long getId() {
         return id;

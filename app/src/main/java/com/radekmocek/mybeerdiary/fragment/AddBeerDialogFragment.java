@@ -1,10 +1,10 @@
 package com.radekmocek.mybeerdiary.fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +36,26 @@ public class AddBeerDialogFragment extends DialogFragment {
     public static final String TAG = "AddBeerDialogFragment";
 
     private static final String pubVisitIDBundleKey = "pubVisitID";
+    private static final String isEditModeBundleKey = "isEditMode";
+    private static final String beerBundleKey = "beer";
 
-    public static AddBeerDialogFragment newInstance(PubVisit p) {
+    public static AddBeerDialogFragment newInstanceAddMode(PubVisit p) {
         AddBeerDialogFragment f = new AddBeerDialogFragment();
 
         Bundle args = new Bundle();
+        args.putBoolean(isEditModeBundleKey, false);
         args.putLong(pubVisitIDBundleKey, p.getId());
+        f.setArguments(args);
+
+        return f;
+    }
+
+    public static AddBeerDialogFragment newInstanceEditMode(Beer b) {
+        AddBeerDialogFragment f = new AddBeerDialogFragment();
+
+        Bundle args = new Bundle();
+        args.putBoolean(isEditModeBundleKey, true);
+        args.putSerializable(beerBundleKey, b);
         f.setArguments(args);
 
         return f;
@@ -63,37 +77,61 @@ public class AddBeerDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         Bundle args = getArguments();
+        boolean isEditMode;
         long pubVisitID;
+        Beer b;
         if (args != null) {
-            pubVisitID = args.getLong(pubVisitIDBundleKey);
+            isEditMode = args.getBoolean(isEditModeBundleKey);
+            if (!isEditMode) {
+                pubVisitID = args.getLong(pubVisitIDBundleKey);
+                b = null;
+            } else {
+                pubVisitID = -1;
+                b = (Beer) args.getSerializable(beerBundleKey);
+            }
         } else {
+            isEditMode = false;
             pubVisitID = -1;
+            b = null;
         }
 
-        Log.d(TAG, "onViewCreated: " + String.valueOf(pubVisitID));
+        if (isEditMode && b == null) {
+            dismiss();
+            return; // So the warnings go away
+        }
 
+        Button iconButton = view.findViewById(R.id.newBeer_iconButton);
         MaterialAutoCompleteTextView editTextBreweryName = view.findViewById(R.id.newBeer_ediTextBreweryName);
         EditText editTextDescription = view.findViewById(R.id.newBeer_editTextDescription);
         EditText editTextEPM = view.findViewById(R.id.newBeer_ediTextEPM);
         EditText editTextABV = view.findViewById(R.id.newBeer_ediTextABV);
         EditText editTextPrice = view.findViewById(R.id.newBeer_ediTextPrice);
         TextView textViewArrow = view.findViewById(R.id.newBeer_textViewArrow);
-
-        editTextBreweryName.setSimpleItems(Const.BREWERIES);
-
         TextInputLayout textFieldABV = view.findViewById(R.id.newBeer_textFieldABV);
-
         MaterialButtonToggleGroup tg = view.findViewById(R.id.newBeer_toggleGroup);
         Button tgButton0 = view.findViewById(R.id.newBeer_toggleGroup_0);
         Button tgButton1 = view.findViewById(R.id.newBeer_toggleGroup_1);
         Button tgButton2 = view.findViewById(R.id.newBeer_toggleGroup_2);
-
         Slider slider = view.findViewById(R.id.newBeer_slider);
-
         CheckBox checkBox = view.findViewById(R.id.newBeer_checkbox);
+        ExtendedFloatingActionButton eFabAdd = view.findViewById(R.id.newBeer_eFabAdd);
+        ExtendedFloatingActionButton eFabDelete = view.findViewById(R.id.newBeer_eFabDelete);
 
-        ExtendedFloatingActionButton eFabOK = view.findViewById(R.id.newBeer_eFabAdd);
+        if (isEditMode) {
+            editTextBreweryName.setText(b.getBreweryName());
+            editTextDescription.setText(b.getDescription());
+            editTextEPM.setText(String.valueOf(b.getEPM()));
+            editTextABV.setText(String.valueOf(b.getABV()));
+            editTextPrice.setText(String.valueOf(b.getPrice()));
+        }
 
+        // IconButton – Close the dialog on click; "cancel" (X)
+        iconButton.setOnClickListener(v -> dismiss());
+
+        // EditText Brewery name – set autocomplete suggestions
+        editTextBreweryName.setSimpleItems(Const.BREWERIES);
+
+        // EditText EPM & ABV – set input regex check and EPM→ABV logic
         editTextEPM.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2, 2)});
         editTextEPM.addTextChangedListener(new TextWatcher() {
             @Override
@@ -114,14 +152,17 @@ public class AddBeerDialogFragment extends DialogFragment {
         editTextABV.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2, 2)});
         textViewArrow.setEnabled(false);
 
-        tg.check(tgButton1.getId());
+        // ButtonToggleGroup – default when adding is 0.5l beer, so tick the middle button; when editing it could be anything, so tick the right button
+        tg.check((!isEditMode) ? tgButton1.getId() : tgButton2.getId());
 
-        slider.setValue(0.4f);
+        // Slider
         slider.addOnChangeListener((slider1, value, fromUser) -> {
             tgButton2.setText(Conv.nBeerLitres2str(value));
             tg.check(tgButton2.getId());
         });
+        slider.setValue((!isEditMode) ? Const.DEFAULT_SLIDER_LITRES : (b.getDecilitres() / 10f));
 
+        // Checkbox
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             textViewArrow.setEnabled(isChecked);
             textFieldABV.setEnabled(!isChecked);
@@ -130,13 +171,18 @@ public class AddBeerDialogFragment extends DialogFragment {
             }
         });
 
-        eFabOK.setOnClickListener(v -> {
-            Beer b = new Beer();
-            b.setPubVisitID(pubVisitID);
+        // Button to confirm adding new beer / editing existing beer
+        if (isEditMode) {
+            eFabAdd.setText("Potvrdit");
+            eFabAdd.setIconResource(R.drawable.ico_check);
+        }
+        eFabAdd.setOnClickListener(v -> {
+            Beer newB = new Beer();
+            newB.setPubVisitID(pubVisitID);
 
-            b.setBreweryName(editTextBreweryName.getText().toString());
-            b.setDescription(editTextDescription.getText().toString());
-            b.setTimestamp(Calendar.getInstance().getTime().getTime());
+            newB.setBreweryName(editTextBreweryName.getText().toString());
+            newB.setDescription(editTextDescription.getText().toString());
+            newB.setTimestamp(Calendar.getInstance().getTime().getTime());
 
             int decilitres;
             if (tg.getCheckedButtonId() == tgButton0.getId()) {
@@ -146,23 +192,23 @@ public class AddBeerDialogFragment extends DialogFragment {
             } else {
                 decilitres = Math.round(slider.getValue() * 10);
             }
-            b.setDecilitres(decilitres);
+            newB.setDecilitres(decilitres);
 
             double EPM;
             try {
                 EPM = Double.parseDouble(editTextEPM.getText().toString());
             } catch (Exception e) {
-                EPM = 12d;
+                EPM = Const.DEFAULT_EPM;
             }
-            b.setEPM(EPM);
+            newB.setEPM(EPM);
 
             double ABV;
             try {
                 ABV = Double.parseDouble(editTextABV.getText().toString());
             } catch (Exception e) {
-                ABV = 4.4d;
+                ABV = Const.DEFAULT_ABV;
             }
-            b.setABV(ABV);
+            newB.setABV(ABV);
 
             int price;
             try {
@@ -170,10 +216,27 @@ public class AddBeerDialogFragment extends DialogFragment {
             } catch (Exception e) {
                 price = 0;
             }
-            b.setPrice(price);
+            newB.setPrice(price);
 
-            ((BeersActivity) requireActivity()).addBeer(b);
+            ((BeersActivity) requireActivity()).addBeer(newB);
 
+            dismiss();
+        });
+
+        // Button to delete beer when editing
+        if (!isEditMode) {
+            eFabDelete.setVisibility(View.GONE);
+        }
+        eFabDelete.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setCancelable(true);
+            builder.setTitle("Smazat Pivo?");
+            builder.setMessage("Opravdu si přejete smazat \"" + b.getBreweryName() + "\"?");
+            //builder.setPositiveButton("Smazat", (dialog, which) -> mainActivity.deletePubVisit(id, rvPos));
+            builder.setNegativeButton("Zrušit", (dialog, which) -> {
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
             dismiss();
         });
     }
