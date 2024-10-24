@@ -117,4 +117,9 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         notifyItemInserted(len);
         return len + 1;
     }
+
+    public void deleteBeer(int rvPos) {
+        collection.remove(rvPos);
+        notifyItemRemoved(rvPos);
+    }
 }

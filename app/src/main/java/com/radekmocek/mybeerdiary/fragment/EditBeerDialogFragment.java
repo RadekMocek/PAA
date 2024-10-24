@@ -88,7 +88,7 @@ public class EditBeerDialogFragment extends DialogFragment {
         });
 
         eFabEdit.setOnClickListener(v -> {
-            AddBeerDialogFragment.newInstanceEditMode(b).show(getParentFragmentManager(), AddBeerDialogFragment.TAG);
+            AddBeerDialogFragment.newInstanceEditMode(b, rvPos).show(getParentFragmentManager(), AddBeerDialogFragment.TAG);
             dismiss();
         });
 

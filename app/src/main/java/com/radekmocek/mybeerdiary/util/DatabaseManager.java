@@ -65,7 +65,22 @@ public class DatabaseManager {
     }
 
     public void deletePubVisit(long id) {
-        db.delete(DatabaseHelper.TABLE_VISITS, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
+        String[] whereArgs = new String[]{String.valueOf(id)};
+        db.delete(DatabaseHelper.TABLE_VISITS, DatabaseHelper.COL_ID + " = ?", whereArgs);
+        // Cascade
+        db.delete(DatabaseHelper.TABLE_BEERS, DatabaseHelper.COL_VISIT_ID + " = ?", whereArgs);
+    }
+
+    private void updatePubVisitTotals(Beer b, PubVisit p, boolean addOrSubtract) {
+        int multiplier = (addOrSubtract) ? 1 : -1;
+        int newTotalBeers = p.getTotalBeers() + multiplier;
+        int newTotalCost = p.getTotalCost() + (b.getPrice() * multiplier);
+        ContentValues cvPV = new ContentValues();
+        cvPV.put(DatabaseHelper.COL_TOTAL_BEERS, newTotalBeers);
+        cvPV.put(DatabaseHelper.COL_TOTAL_COST, newTotalCost);
+        db.update(DatabaseHelper.TABLE_VISITS, cvPV, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(p.getId())});
+        p.setTotalBeers(newTotalBeers);
+        p.setTotalCost(newTotalCost);
     }
 
     // Beers
@@ -107,15 +122,13 @@ public class DatabaseManager {
         cvB.put(DatabaseHelper.COL_ABV, b.getABV());
         cvB.put(DatabaseHelper.COL_PRICE, b.getPrice());
         // Edit totals in TABLE_VISITS
-        int newTotalBeers = p.getTotalBeers() + 1;
-        int newTotalCost = p.getTotalCost() + b.getPrice();
-        ContentValues cvPV = new ContentValues();
-        cvPV.put(DatabaseHelper.COL_TOTAL_BEERS, newTotalBeers);
-        cvPV.put(DatabaseHelper.COL_TOTAL_COST, newTotalCost);
-        db.update(DatabaseHelper.TABLE_VISITS, cvPV, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(p.getId())});
-        p.setTotalBeers(newTotalBeers);
-        p.setTotalCost(newTotalCost);
+        updatePubVisitTotals(b, p, true);
         // Add Beer to TABLE_BEERS
         return db.insert(DatabaseHelper.TABLE_BEERS, null, cvB);
+    }
+
+    public void deleteBeer(Beer b, PubVisit p) {
+        updatePubVisitTotals(b, p, false);
+        db.delete(DatabaseHelper.TABLE_BEERS, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(b.getId())});
     }
 }

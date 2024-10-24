@@ -38,6 +38,7 @@ public class AddBeerDialogFragment extends DialogFragment {
     private static final String pubVisitIDBundleKey = "pubVisitID";
     private static final String isEditModeBundleKey = "isEditMode";
     private static final String beerBundleKey = "beer";
+    private static final String rvPosBundleKey = "recyclerViewPosition";
 
     public static AddBeerDialogFragment newInstanceAddMode(PubVisit p) {
         AddBeerDialogFragment f = new AddBeerDialogFragment();
@@ -50,12 +51,13 @@ public class AddBeerDialogFragment extends DialogFragment {
         return f;
     }
 
-    public static AddBeerDialogFragment newInstanceEditMode(Beer b) {
+    public static AddBeerDialogFragment newInstanceEditMode(Beer b, int rvPos) {
         AddBeerDialogFragment f = new AddBeerDialogFragment();
 
         Bundle args = new Bundle();
         args.putBoolean(isEditModeBundleKey, true);
         args.putSerializable(beerBundleKey, b);
+        args.putInt(rvPosBundleKey, rvPos);
         f.setArguments(args);
 
         return f;
@@ -80,25 +82,31 @@ public class AddBeerDialogFragment extends DialogFragment {
         boolean isEditMode;
         long pubVisitID;
         Beer b;
+        int rvPos;
         if (args != null) {
             isEditMode = args.getBoolean(isEditModeBundleKey);
             if (!isEditMode) {
                 pubVisitID = args.getLong(pubVisitIDBundleKey);
                 b = null;
+                rvPos = -1;
             } else {
                 pubVisitID = -1;
                 b = (Beer) args.getSerializable(beerBundleKey);
+                rvPos = args.getInt(rvPosBundleKey);
             }
         } else {
             isEditMode = false;
             pubVisitID = -1;
             b = null;
+            rvPos = -1;
         }
 
         if (isEditMode && b == null) {
             dismiss();
             return; // So the warnings go away
         }
+
+        BeersActivity beersActivity = (BeersActivity) requireActivity();
 
         Button iconButton = view.findViewById(R.id.newBeer_iconButton);
         MaterialAutoCompleteTextView editTextBreweryName = view.findViewById(R.id.newBeer_ediTextBreweryName);
@@ -232,7 +240,7 @@ public class AddBeerDialogFragment extends DialogFragment {
             builder.setCancelable(true);
             builder.setTitle("Smazat Pivo?");
             builder.setMessage("Opravdu si přejete smazat \"" + b.getBreweryName() + "\"?");
-            //builder.setPositiveButton("Smazat", (dialog, which) -> mainActivity.deletePubVisit(id, rvPos));
+            builder.setPositiveButton("Smazat", (dialog, which) -> beersActivity.deleteBeer(b, rvPos));
             builder.setNegativeButton("Zrušit", (dialog, which) -> {
             });
             AlertDialog dialog = builder.create();

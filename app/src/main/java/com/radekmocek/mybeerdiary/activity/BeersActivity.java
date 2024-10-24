@@ -54,4 +54,9 @@ public class BeersActivity extends AppCompatActivity {
         int rvPos = adBeers.addBeer(b);
         layoutManager.scrollToPosition(rvPos);
     }
+
+    public void deleteBeer(Beer b, int rvPos) {
+        db.deleteBeer(b, pubVisit);
+        adBeers.deleteBeer(rvPos);
+    }
 }
