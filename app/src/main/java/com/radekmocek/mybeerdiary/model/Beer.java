@@ -1,9 +1,11 @@
 package com.radekmocek.mybeerdiary.model;
 
+import java.util.Comparator;
+
 public class Beer {
 
-    private int id;
-    private int pubVisitID;
+    private long id;
+    private long pubVisitID;
     private String breweryName;
     private String description;
     private long timestamp;
@@ -12,19 +14,19 @@ public class Beer {
     private double ABV;
     private int price;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getPubVisitID() {
+    public long getPubVisitID() {
         return pubVisitID;
     }
 
-    public void setPubVisitID(int pubVisitID) {
+    public void setPubVisitID(long pubVisitID) {
         this.pubVisitID = pubVisitID;
     }
 
@@ -83,4 +85,6 @@ public class Beer {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    public static final Comparator<Beer> comparator = Comparator.comparingLong((Beer b) -> b.timestamp);
 }

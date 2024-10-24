@@ -29,9 +29,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/beer_timestamp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="3dp"
             android:text="OVIPISTÁN"
-            android:textSize="20.5sp"
+            android:textSize="20.25sp"
             android:textStyle="bold" />
 
         <TextView
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/beer_breweryName"
             android:text="PRZIDENT - světlý ležák"
-            android:textSize="17.0sp" />
+            android:textSize="17.5sp" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/beer_divider"

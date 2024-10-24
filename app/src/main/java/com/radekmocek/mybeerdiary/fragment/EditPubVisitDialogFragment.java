@@ -30,7 +30,7 @@ public class EditPubVisitDialogFragment extends DialogFragment {
 
         Bundle args = new Bundle();
         args.putString(pubNameBundleKey, p.getPubName());
-        args.putInt(idBundleKey, p.getId());
+        args.putLong(idBundleKey, p.getId());
         args.putInt(rvPosBundleKey, rvPos);
         f.setArguments(args);
 
@@ -53,7 +53,8 @@ public class EditPubVisitDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         Bundle args = getArguments();
-        int id, rvPos;
+        long id;
+        int rvPos;
         String name;
         if (args != null) {
             id = args.getInt(idBundleKey);

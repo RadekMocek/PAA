@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class AddBeerDialogFragment extends DialogFragment {
         AddBeerDialogFragment f = new AddBeerDialogFragment();
 
         Bundle args = new Bundle();
-        args.putInt(pubVisitIDBundleKey, p.getId());
+        args.putLong(pubVisitIDBundleKey, p.getId());
         f.setArguments(args);
 
         return f;
@@ -62,12 +63,14 @@ public class AddBeerDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         Bundle args = getArguments();
-        int pubVisitID;
+        long pubVisitID;
         if (args != null) {
-            pubVisitID = args.getInt(pubVisitIDBundleKey);
+            pubVisitID = args.getLong(pubVisitIDBundleKey);
         } else {
             pubVisitID = -1;
         }
+
+        Log.d(TAG, "onViewCreated: " + String.valueOf(pubVisitID));
 
         MaterialAutoCompleteTextView editTextBreweryName = view.findViewById(R.id.newBeer_ediTextBreweryName);
         EditText editTextDescription = view.findViewById(R.id.newBeer_editTextDescription);

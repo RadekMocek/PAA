@@ -36,10 +36,10 @@ public class BeersActivity extends AppCompatActivity {
 
         ((Toolbar) findViewById(R.id.toolbar)).setTitle(pubVisit.getPubName());
 
-        //db = new DatabaseManager(this);
+        db = new DatabaseManager(this);
         layoutManager = new LinearLayoutManager(this);
         fragmentManager = getSupportFragmentManager();
-        adBeers = new BeersAdapter();
+        adBeers = new BeersAdapter(db, pubVisit.getId(), fragmentManager, this);
 
         RecyclerView rvBeers = findViewById(R.id.recyclerView_beers);
         rvBeers.setAdapter(adBeers);
@@ -49,6 +49,7 @@ public class BeersActivity extends AppCompatActivity {
     }
 
     public void addBeer(Beer b) {
+        db.addBeer(b, pubVisit);
         adBeers.addBeer(b);
     }
 }

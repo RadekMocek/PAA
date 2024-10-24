@@ -5,17 +5,17 @@ import java.util.Comparator;
 
 public class PubVisit implements Serializable {
 
-    private int id;
+    private long id;
     private String pubName;
     private long timestamp;
     private int totalBeers;
     private int totalCost;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

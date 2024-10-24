@@ -29,46 +29,74 @@ public class DatabaseManager {
     // PubVisits
     @SuppressLint("Range")
     public List<PubVisit> GetAllPubVisits() {
-        List<PubVisit> taskList = new ArrayList<>();
+        List<PubVisit> collection = new ArrayList<>();
         db.beginTransaction();
         try (Cursor cursor = db.query(DatabaseHelper.TABLE_VISITS, null, null, null, null, null, null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     PubVisit p = new PubVisit();
-                    p.setId(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COL_ID)));
+                    p.setId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COL_ID)));
                     p.setPubName(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COL_NAME)));
                     p.setTimestamp(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COL_TIMESTAMP)));
                     p.setTotalBeers(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COL_TOTAL_BEERS)));
                     p.setTotalCost(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COL_TOTAL_COST)));
-                    taskList.add(p);
+                    collection.add(p);
                 } while (cursor.moveToNext());
             }
         } finally {
             db.endTransaction();
         }
-        return taskList;
+        return collection;
     }
 
-    public void addPubVisit(PubVisit p) {
+    public long addPubVisit(PubVisit p) {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COL_NAME, p.getPubName());
         cv.put(DatabaseHelper.COL_TIMESTAMP, p.getTimestamp());
         cv.put(DatabaseHelper.COL_TOTAL_BEERS, p.getTotalBeers());
         cv.put(DatabaseHelper.COL_TOTAL_COST, p.getTotalCost());
-        db.insert(DatabaseHelper.TABLE_VISITS, null, cv);
+        return db.insert(DatabaseHelper.TABLE_VISITS, null, cv);
     }
 
-    public void editPubVisitPubName(int id, String name) {
+    public void editPubVisitPubName(long id, String name) {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COL_NAME, name);
         db.update(DatabaseHelper.TABLE_VISITS, cv, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
-    public void deletePubVisit(int id) {
+    public void deletePubVisit(long id) {
         db.delete(DatabaseHelper.TABLE_VISITS, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
-    public void addBeer(Beer b) {
+    // Beers
+    @SuppressLint("Range")
+    public List<Beer> GetAllBeers(long pubVisitID) {
+        List<Beer> collection = new ArrayList<>();
+        db.beginTransaction();
+        try (Cursor cursor = db.query(DatabaseHelper.TABLE_BEERS, null, DatabaseHelper.COL_VISIT_ID + " = ?", new String[]{String.valueOf(pubVisitID)}, null, null, null, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    Beer b = new Beer();
+                    b.setId(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COL_ID)));
+                    b.setPubVisitID(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COL_VISIT_ID)));
+                    b.setBreweryName(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COL_NAME)));
+                    b.setDescription(cursor.getString(cursor.getColumnIndex(DatabaseHelper.COL_DESCRIPTION)));
+                    b.setTimestamp(cursor.getLong(cursor.getColumnIndex(DatabaseHelper.COL_TIMESTAMP)));
+                    b.setDecilitres(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COL_DECILITRES)));
+                    b.setEPM(cursor.getDouble(cursor.getColumnIndex(DatabaseHelper.COL_EPM)));
+                    b.setABV(cursor.getDouble(cursor.getColumnIndex(DatabaseHelper.COL_ABV)));
+                    b.setPrice(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COL_PRICE)));
+                    collection.add(b);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            db.endTransaction();
+        }
+        return collection;
+    }
+
+    public void addBeer(Beer b, PubVisit p) {
+        // Add beer to TABLE_BEERS
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COL_VISIT_ID, b.getPubVisitID());
         cv.put(DatabaseHelper.COL_NAME, b.getBreweryName());
@@ -79,5 +107,14 @@ public class DatabaseManager {
         cv.put(DatabaseHelper.COL_ABV, b.getABV());
         cv.put(DatabaseHelper.COL_PRICE, b.getPrice());
         db.insert(DatabaseHelper.TABLE_BEERS, null, cv);
+        // Edit totals in TABLE_VISITS
+        int newTotalBeers = p.getTotalBeers() + 1;
+        int newTotalCost = p.getTotalCost() + b.getPrice();
+        cv = new ContentValues();
+        cv.put(DatabaseHelper.COL_TOTAL_BEERS, newTotalBeers);
+        cv.put(DatabaseHelper.COL_TOTAL_COST, newTotalCost);
+        db.update(DatabaseHelper.TABLE_VISITS, cv, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(p.getId())});
+        p.setTotalBeers(newTotalBeers);
+        p.setTotalCost(newTotalCost);
     }
 }

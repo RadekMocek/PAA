@@ -1,5 +1,7 @@
 package com.radekmocek.mybeerdiary.adapter;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,21 +9,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.model.Beer;
 import com.radekmocek.mybeerdiary.util.Conv;
+import com.radekmocek.mybeerdiary.util.DatabaseManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> {
 
+    private final FragmentManager fragmentManager;
+    private final Context context;
     private final List<Beer> collection;
 
-    public BeersAdapter() {
-        collection = new ArrayList<>();
+    public BeersAdapter(DatabaseManager db, long pubVisitID, FragmentManager fragmentManager, Context context) {
+        this.fragmentManager = fragmentManager;
+        this.context = context;
+
+        collection = db.GetAllBeers(pubVisitID);
+        collection.sort(Beer.comparator);
     }
 
     @NonNull
@@ -65,7 +74,12 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         holder.price.setText(String.valueOf(item.getPrice()) + " Kč");
 
         // Events
-        // ...
+        holder.itemView.setOnLongClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            return true;
+        });
     }
 
     @Override

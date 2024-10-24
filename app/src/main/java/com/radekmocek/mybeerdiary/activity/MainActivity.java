@@ -49,17 +49,18 @@ public class MainActivity extends AppCompatActivity {
         p.setTimestamp(Calendar.getInstance().getTime().getTime());
         p.setTotalBeers(0);
         p.setTotalCost(0);
-        db.addPubVisit(p);
+        long id = db.addPubVisit(p);
+        p.setId(id);
         adPubVisits.addPubVisit(p);
         layoutManager.scrollToPosition(0);
     }
 
-    public void editPubVisitName(int id, String name, int rvPos) {
+    public void editPubVisitName(long id, String name, int rvPos) {
         db.editPubVisitPubName(id, name);
         adPubVisits.editPubVisitPubName(name, rvPos);
     }
 
-    public void deletePubVisit(int id, int rvPos) {
+    public void deletePubVisit(long id, int rvPos) {
         db.deletePubVisit(id);
         adPubVisits.deletePubVisit(rvPos);
     }
