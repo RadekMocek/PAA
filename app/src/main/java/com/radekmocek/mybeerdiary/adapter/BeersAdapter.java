@@ -118,6 +118,17 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         return len + 1;
     }
 
+    public void editBeer(Beer newB, int rvPos) {
+        Beer b = collection.get(rvPos);
+        b.setBreweryName(newB.getBreweryName());
+        b.setDescription(newB.getDescription());
+        b.setDecilitres(newB.getDecilitres());
+        b.setEPM(newB.getEPM());
+        b.setABV(newB.getABV());
+        b.setPrice(newB.getPrice());
+        notifyItemChanged(rvPos);
+    }
+
     public void deleteBeer(int rvPos) {
         collection.remove(rvPos);
         notifyItemRemoved(rvPos);

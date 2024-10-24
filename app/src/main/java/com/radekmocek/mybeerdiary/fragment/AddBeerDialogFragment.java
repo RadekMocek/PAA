@@ -226,7 +226,13 @@ public class AddBeerDialogFragment extends DialogFragment {
             }
             newB.setPrice(price);
 
-            ((BeersActivity) requireActivity()).addBeer(newB);
+            if (!isEditMode) {
+                beersActivity.addBeer(newB);
+            } else {
+                //newB.setPubVisitID(b.getPubVisitID());
+                //newB.setTimestamp(b.getTimestamp());
+                beersActivity.editBeer(b.getId(), newB, price - b.getPrice(), rvPos);
+            }
 
             dismiss();
         });
