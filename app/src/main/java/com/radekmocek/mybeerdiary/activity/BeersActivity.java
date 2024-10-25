@@ -39,13 +39,15 @@ public class BeersActivity extends AppCompatActivity {
         db = new DatabaseManager(this);
         layoutManager = new LinearLayoutManager(this);
         fragmentManager = getSupportFragmentManager();
-        adBeers = new BeersAdapter(db, pubVisit.getId(), fragmentManager, this);
+        adBeers = new BeersAdapter(db, pubVisit.getId(), fragmentManager);
 
         RecyclerView rvBeers = findViewById(R.id.recyclerView_beers);
         rvBeers.setAdapter(adBeers);
         rvBeers.setLayoutManager(layoutManager);
 
         findViewById(R.id.fab_addBeer).setOnClickListener(v -> AddBeerDialogFragment.newInstanceAddMode(pubVisit).show(fragmentManager, AddBeerDialogFragment.TAG));
+
+        layoutManager.scrollToPosition(adBeers.getItemCount() - 1);
     }
 
     public void addBeer(Beer b) {

@@ -160,15 +160,15 @@ public class AddBeerDialogFragment extends DialogFragment {
         editTextABV.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2, 2)});
         textViewArrow.setEnabled(false);
 
-        // ButtonToggleGroup – default when adding is 0.5l beer, so tick the middle button; when editing it could be anything, so tick the right button
-        tg.check((!isEditMode) ? tgButton1.getId() : tgButton2.getId());
-
         // Slider
         slider.addOnChangeListener((slider1, value, fromUser) -> {
             tgButton2.setText(Conv.nBeerLitres2str(value));
             tg.check(tgButton2.getId());
         });
         slider.setValue((!isEditMode) ? Const.DEFAULT_SLIDER_LITRES : (b.getDecilitres() / 10f));
+
+        // ButtonToggleGroup – default when adding is 0.5l beer, so tick the middle button; when editing it could be anything, so tick the right button
+        tg.check((!isEditMode) ? tgButton1.getId() : tgButton2.getId());
 
         // Checkbox
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -245,7 +245,7 @@ public class AddBeerDialogFragment extends DialogFragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setCancelable(true);
             builder.setTitle("Smazat Pivo?");
-            builder.setMessage("Opravdu si přejete smazat \"" + b.getBreweryName() + "\"?");
+            builder.setMessage("Opravdu si přejete smazat \"" + Conv.beer2str(b) + "\"?");
             builder.setPositiveButton("Smazat", (dialog, which) -> beersActivity.deleteBeer(b, rvPos));
             builder.setNegativeButton("Zrušit", (dialog, which) -> {
             });

@@ -1,6 +1,5 @@
 package com.radekmocek.mybeerdiary.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,12 +21,10 @@ import java.util.List;
 public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> {
 
     private final FragmentManager fragmentManager;
-    private final Context context;
     private final List<Beer> collection;
 
-    public BeersAdapter(DatabaseManager db, long pubVisitID, FragmentManager fragmentManager, Context context) {
+    public BeersAdapter(DatabaseManager db, long pubVisitID, FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
-        this.context = context;
 
         collection = db.GetAllBeers(pubVisitID);
         collection.sort(Beer.comparator);
@@ -115,7 +112,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         int len = collection.size();
         collection.add(b);
         notifyItemInserted(len);
-        return len + 1;
+        return len; // Last item index
     }
 
     public void editBeer(Beer newB, int rvPos) {

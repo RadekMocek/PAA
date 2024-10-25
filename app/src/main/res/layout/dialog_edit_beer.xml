@@ -20,8 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editBeer_header"
-        android:layout_marginStart="56dp"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="9dp"
+        android:layout_marginEnd="56dp"
         android:text="Znovu"
         app:icon="@drawable/ico_repeat" />
 
@@ -30,9 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editBeer_header"
-        android:layout_alignParentEnd="true"
+        android:layout_marginStart="56dp"
         android:layout_marginTop="9dp"
-        android:layout_marginEnd="56dp"
         android:text="Upravit"
         app:icon="@drawable/ico_edit" />
 

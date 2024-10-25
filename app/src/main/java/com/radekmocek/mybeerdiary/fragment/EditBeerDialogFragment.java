@@ -14,7 +14,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.activity.BeersActivity;
 import com.radekmocek.mybeerdiary.model.Beer;
-import com.radekmocek.mybeerdiary.util.Const;
+import com.radekmocek.mybeerdiary.util.Conv;
 
 import java.util.Calendar;
 
@@ -67,16 +67,7 @@ public class EditBeerDialogFragment extends DialogFragment {
         ExtendedFloatingActionButton eFabEdit = view.findViewById(R.id.editBeer_eFabEdit);
         Button buttonDismiss = view.findViewById(R.id.editBeer_buttonDismiss);
 
-        if (b != null) {
-            String breweryName = b.getBreweryName();
-            String headerToShow = (!breweryName.isEmpty()) ? breweryName : "Pivo";
-            String description = b.getDescription();
-            if (!description.isEmpty()) headerToShow += ": " + description;
-            if (headerToShow.length() > Const.MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS) {
-                headerToShow = headerToShow.substring(0, Const.MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS);
-            }
-            textView.setText(headerToShow);
-        }
+        textView.setText(Conv.beer2str(b));
 
         eFabRepeat.setOnClickListener(v -> {
             if (b != null) {

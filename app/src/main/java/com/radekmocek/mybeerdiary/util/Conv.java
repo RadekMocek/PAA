@@ -1,5 +1,7 @@
 package com.radekmocek.mybeerdiary.util;
 
+import com.radekmocek.mybeerdiary.model.Beer;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,5 +56,17 @@ public final class Conv {
             return String.valueOf(0d);
         }
         return String.valueOf(Calc.fitDoubleToTwoIntAndTwoFractionPlacesPositive(Calc.EPM2AVG(EPM)));
+    }
+
+    public static String beer2str(Beer b) {
+        if (b == null) return "Pivo";
+        String breweryName = b.getBreweryName();
+        String result = (!breweryName.isEmpty()) ? breweryName : "Pivo";
+        String description = b.getDescription();
+        if (!description.isEmpty()) result += ": " + description;
+        if (result.length() > Const.MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS) {
+            result = result.substring(0, Const.MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS - 3) + "...";
+        }
+        return result;
     }
 }

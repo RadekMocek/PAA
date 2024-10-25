@@ -36,9 +36,11 @@
         android:layout_gravity="bottom">
 
         <TextView
+            android:id="@+id/bottomAppBar_textView_0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bottom text" />
+            android:text="Bottom text\nBottom text\nBottom text"
+            android:textSize="21sp" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
