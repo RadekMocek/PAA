@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ((Toolbar) findViewById(R.id.toolbar)).setTitle("Pub visits");
+        ((Toolbar) findViewById(R.id.topAppBar)).setTitle("Pub visits");
 
         db = new DatabaseManager(this);
         layoutManager = new LinearLayoutManager(this);

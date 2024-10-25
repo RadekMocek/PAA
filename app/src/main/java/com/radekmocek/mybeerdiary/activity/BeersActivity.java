@@ -34,7 +34,7 @@ public class BeersActivity extends AppCompatActivity {
             pubVisit = (PubVisit) args.getSerializable("pubVisit");
         }
 
-        ((Toolbar) findViewById(R.id.toolbar)).setTitle(pubVisit.getPubName());
+        ((Toolbar) findViewById(R.id.topAppBar)).setTitle(pubVisit.getPubName());
 
         db = new DatabaseManager(this);
         layoutManager = new LinearLayoutManager(this);
