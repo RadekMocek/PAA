@@ -88,6 +88,18 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
         }
     }
 
+    // https://stackoverflow.com/a/52718361
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    // https://stackoverflow.com/a/58106787
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     // Data manipulation functions
     public void addPubVisit(PubVisit p) {
         collection.add(0, p);

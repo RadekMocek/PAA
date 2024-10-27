@@ -34,10 +34,12 @@ public final class Calc {
     // https://en.wikipedia.org/wiki/Standard_drink
     private final static double BAC_R_CONSTANT_MALE = 0.68d;
     private final static double BAC_R_CONSTANT_FEMALE = 0.55d;
+    private final static double ALCOHOL_METABOLISM_RATE_PERCENT_PER_HOUR = 0.016d;
+    private final static double ALCOHOL_METABOLISM_RATE_PERMILLE_PER_HOUR = 10 * ALCOHOL_METABOLISM_RATE_PERCENT_PER_HOUR;
 
     public static PubVisitInfoCrate getPubVisitInfo(BeersAdapter adBeers, int userWeight, boolean isUserMale) {
         List<Beer> beers = adBeers.getCollection();
-        if (beers.isEmpty() || userWeight <= 0) return null;
+        if (beers.isEmpty() || userWeight <= 0) return new PubVisitInfoCrate(0, 0, "0h0m");
 
         // Assuming collection is sorted by timestamp (earliest first)
         long firstTimestamp = beers.get(0).getTimestamp();
@@ -52,9 +54,9 @@ public final class Calc {
         }
 
         double rConstant = (isUserMale) ? BAC_R_CONSTANT_MALE : BAC_R_CONSTANT_FEMALE;
-        double permille = (gramsOfAlcohol / (rConstant * userWeight)) - ((duration / 3600000d) * 0.015d);
+        double permille = (gramsOfAlcohol / (rConstant * userWeight)) - ((duration / 3600000d) * ALCOHOL_METABOLISM_RATE_PERCENT_PER_HOUR);
 
-        double remainingHours = permille / 0.15d;
+        double remainingHours = permille / ALCOHOL_METABOLISM_RATE_PERMILLE_PER_HOUR;
         int hours = (int) remainingHours;
         int minutes = (int) ((remainingHours - hours) * 60);
         String soberIn = hours + "h" + minutes + "m";

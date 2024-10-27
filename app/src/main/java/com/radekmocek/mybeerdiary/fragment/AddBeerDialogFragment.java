@@ -1,6 +1,7 @@
 package com.radekmocek.mybeerdiary.fragment;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -253,5 +254,11 @@ public class AddBeerDialogFragment extends DialogFragment {
             dialog.show();
             dismiss();
         });
+    }
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        ((BeersActivity) requireActivity()).enableFAB();
     }
 }

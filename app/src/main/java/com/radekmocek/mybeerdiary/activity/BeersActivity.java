@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.adapter.BeersAdapter;
 import com.radekmocek.mybeerdiary.fragment.AddBeerDialogFragment;
@@ -37,6 +38,8 @@ public class BeersActivity extends AppCompatActivity {
     private int userWeight;
     private boolean isUserMale;
 
+    private FloatingActionButton fabAddBeer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,9 @@ public class BeersActivity extends AppCompatActivity {
             pubVisit = (PubVisit) args.getSerializable("pubVisit");
         }
 
-        ((Toolbar) findViewById(R.id.topAppBar)).setTitle(pubVisit.getPubName());
+        Toolbar topAppBar = findViewById(R.id.topAppBar);
+        topAppBar.setTitle(pubVisit.getPubName());
+        topAppBar.setNavigationOnClickListener(v -> finish());
 
         db = new DatabaseManager(this);
         layoutManager = new LinearLayoutManager(this);
@@ -66,11 +71,21 @@ public class BeersActivity extends AppCompatActivity {
         rvBeers.setAdapter(adBeers);
         rvBeers.setLayoutManager(layoutManager);
 
-        findViewById(R.id.fab_addBeer).setOnClickListener(v -> AddBeerDialogFragment.newInstanceAddMode(pubVisit).show(fragmentManager, AddBeerDialogFragment.TAG));
+        fabAddBeer = findViewById(R.id.fab_addBeer);
+        fabAddBeer.setOnClickListener(v -> {
+            fabAddBeer.setEnabled(false);
+            fabAddBeer.setImageResource(R.drawable.ico_hourglass);
+            AddBeerDialogFragment.newInstanceAddMode(pubVisit).show(fragmentManager, AddBeerDialogFragment.TAG);
+        });
 
         layoutManager.scrollToPosition(adBeers.getItemCount() - 1);
 
         updateBottomAppBarInfo();
+    }
+
+    public void enableFAB() {
+        fabAddBeer.setEnabled(true);
+        fabAddBeer.setImageResource(R.drawable.ico_add);
     }
 
     public void addBeer(Beer b) {
@@ -78,16 +93,19 @@ public class BeersActivity extends AppCompatActivity {
         b.setId(id);
         int rvPos = adBeers.addBeer(b);
         layoutManager.scrollToPosition(rvPos);
+        updateBottomAppBarInfo();
     }
 
     public void editBeer(long id, Beer newB, int priceChange, int rvPos) {
         db.editBeer(id, newB, priceChange, pubVisit);
         adBeers.editBeer(newB, rvPos);
+        updateBottomAppBarInfo();
     }
 
     public void deleteBeer(Beer b, int rvPos) {
         db.deleteBeer(b, pubVisit);
         adBeers.deleteBeer(rvPos);
+        updateBottomAppBarInfo();
     }
 
     private void updateBottomAppBarInfo() {
