@@ -15,4 +15,10 @@ public final class Const {
     public static final float DEFAULT_SLIDER_LITRES = 0.4f;
 
     public static final int MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS = 33;
+
+    public static final String PREFS_NAME = "UserSettings";
+    public static final String PREFS_KEY_IS_MALE = "isMale";
+    public static final boolean PREFS_DEFAULT_IS_MALE = true;
+    public static final String PREFS_KEY_WEIGHT = "weight";
+    public static final int PREFS_DEFAULT_WEIGHT = 80;
 }

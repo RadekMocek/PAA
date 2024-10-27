@@ -16,7 +16,7 @@
 
     <Button
         android:id="@+id/newBeer_iconButton"
-        style="?attr/materialIconButtonOutlinedStyle"
+        style="?attr/materialIconButtonFilledTonalStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -36,7 +36,7 @@
         app:endIconMode="custom">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/newBeer_ediTextBreweryName"
+            android:id="@+id/newBeer_editTextBreweryName"
             style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -136,7 +136,7 @@
         app:endIconMode="custom">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newBeer_ediTextEPM"
+            android:id="@+id/newBeer_editTextEPM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal" />
@@ -165,7 +165,7 @@
         app:endIconMode="custom">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newBeer_ediTextABV"
+            android:id="@+id/newBeer_editTextABV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal" />
@@ -192,7 +192,7 @@
         app:suffixText="Kč">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newBeer_ediTextPrice"
+            android:id="@+id/newBeer_editTextPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number" />

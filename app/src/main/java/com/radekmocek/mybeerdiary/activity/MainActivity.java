@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.adapter.PubVisitsAdapter;
 import com.radekmocek.mybeerdiary.fragment.AddPubVisitDialogFragment;
+import com.radekmocek.mybeerdiary.fragment.SettingsDialogFragment;
 import com.radekmocek.mybeerdiary.model.PubVisit;
 import com.radekmocek.mybeerdiary.util.DatabaseManager;
 
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         rvPubVisits.setLayoutManager(layoutManager);
 
         findViewById(R.id.fab_addPubVisit).setOnClickListener(v -> AddPubVisitDialogFragment.newInstance().show(fragmentManager, AddPubVisitDialogFragment.TAG));
+
+        findViewById(R.id.iconButtonSettings).setOnClickListener(v -> SettingsDialogFragment.newInstance().show(fragmentManager, SettingsDialogFragment.TAG));
     }
 
     public void addPubVisit(String name) {

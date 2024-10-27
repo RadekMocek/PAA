@@ -109,11 +109,11 @@ public class AddBeerDialogFragment extends DialogFragment {
         BeersActivity beersActivity = (BeersActivity) requireActivity();
 
         Button iconButton = view.findViewById(R.id.newBeer_iconButton);
-        MaterialAutoCompleteTextView editTextBreweryName = view.findViewById(R.id.newBeer_ediTextBreweryName);
+        MaterialAutoCompleteTextView editTextBreweryName = view.findViewById(R.id.newBeer_editTextBreweryName);
         EditText editTextDescription = view.findViewById(R.id.newBeer_editTextDescription);
-        EditText editTextEPM = view.findViewById(R.id.newBeer_ediTextEPM);
-        EditText editTextABV = view.findViewById(R.id.newBeer_ediTextABV);
-        EditText editTextPrice = view.findViewById(R.id.newBeer_ediTextPrice);
+        EditText editTextEPM = view.findViewById(R.id.newBeer_editTextEPM);
+        EditText editTextABV = view.findViewById(R.id.newBeer_editTextABV);
+        EditText editTextPrice = view.findViewById(R.id.newBeer_editTextPrice);
         TextView textViewArrow = view.findViewById(R.id.newBeer_textViewArrow);
         TextInputLayout textFieldABV = view.findViewById(R.id.newBeer_textFieldABV);
         MaterialButtonToggleGroup tg = view.findViewById(R.id.newBeer_toggleGroup);
