@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:nestedScrollingEnabled="true"
-        android:paddingBottom="100dp"
+        android:paddingBottom="136dp"
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -32,15 +32,59 @@
         android:id="@+id/bottomAppBar"
         style="@style/Widget.Material3.BottomAppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="136dp"
         android:layout_gravity="bottom">
 
-        <TextView
-            android:id="@+id/bottomAppBar_textView_0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bottom text\nBottom text\nBottom text"
-            android:textSize="21sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/BAB_TextView_nBeers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:drawablePadding="10dp"
+                android:text="20 piv"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ico_beer" />
+
+            <TextView
+                android:id="@+id/BAB_TextView_totalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/BAB_TextView_nBeers"
+                android:layout_marginBottom="5dp"
+                android:drawablePadding="10dp"
+                android:text="100 Kč"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ico_coins" />
+
+            <TextView
+                android:id="@+id/BAB_TextView_permille"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/BAB_TextView_totalPrice"
+                android:layout_marginBottom="5dp"
+                android:drawablePadding="10dp"
+                android:text="4 promile"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ico_permille" />
+
+            <TextView
+                android:id="@+id/BAB_TextView_sober"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/BAB_TextView_permille"
+                android:drawablePadding="10dp"
+                android:text="Za xxhxxm od posledního piva"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ico_sober" />
+        </RelativeLayout>
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

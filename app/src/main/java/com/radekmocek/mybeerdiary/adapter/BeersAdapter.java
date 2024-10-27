@@ -23,6 +23,10 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
     private final FragmentManager fragmentManager;
     private final List<Beer> collection;
 
+    public List<Beer> getCollection() {
+        return collection;
+    }
+
     public BeersAdapter(DatabaseManager db, long pubVisitID, FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
 
