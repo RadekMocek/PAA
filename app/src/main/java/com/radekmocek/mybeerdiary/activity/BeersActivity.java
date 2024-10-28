@@ -16,7 +16,6 @@ import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.adapter.BeersAdapter;
 import com.radekmocek.mybeerdiary.fragment.AddBeerDialogFragment;
 import com.radekmocek.mybeerdiary.model.Beer;
-import com.radekmocek.mybeerdiary.model.PubVisit;
 import com.radekmocek.mybeerdiary.model.PubVisitInfoCrate;
 import com.radekmocek.mybeerdiary.util.Calc;
 import com.radekmocek.mybeerdiary.util.Const;
@@ -29,16 +28,21 @@ public class BeersActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private BeersAdapter adBeers;
 
-    private PubVisit pubVisit;
+    private long pubVisitID;
+    private String pubVisitName;
+    private int pubVisitRvPos;
+    private int totalCost;
 
     private TextView textViewNBeers;
-    private TextView textViewTotalPrice;
+    private TextView textViewTotalCost;
     private TextView textViewPermille;
     private TextView textViewSober;
     private int userWeight;
     private boolean isUserMale;
 
     private FloatingActionButton fabAddBeer;
+
+    boolean hasAnythingChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,20 +51,22 @@ public class BeersActivity extends AppCompatActivity {
 
         Bundle args = getIntent().getExtras();
         if (args != null) {
-            pubVisit = (PubVisit) args.getSerializable("pubVisit");
+            pubVisitID = args.getLong(Const.INTENT_EXTRAS_KEY_PUB_VISIT_ID);
+            pubVisitName = args.getString(Const.INTENT_EXTRAS_KEY_PUB_VISIT_NAME);
+            pubVisitRvPos = args.getInt(Const.INTENT_EXTRAS_KEY_PUB_VISIT_RV_POS);
         }
 
         Toolbar topAppBar = findViewById(R.id.topAppBar);
-        topAppBar.setTitle(pubVisit.getPubName());
+        topAppBar.setTitle(pubVisitName);
         topAppBar.setNavigationOnClickListener(v -> finish());
 
         db = new DatabaseManager(this);
         layoutManager = new LinearLayoutManager(this);
         fragmentManager = getSupportFragmentManager();
-        adBeers = new BeersAdapter(db, pubVisit.getId(), fragmentManager);
+        adBeers = new BeersAdapter(db, pubVisitID, fragmentManager);
 
         textViewNBeers = findViewById(R.id.BAB_TextView_nBeers);
-        textViewTotalPrice = findViewById(R.id.BAB_TextView_totalPrice);
+        textViewTotalCost = findViewById(R.id.BAB_TextView_totalCost);
         textViewPermille = findViewById(R.id.BAB_TextView_permille);
         textViewSober = findViewById(R.id.BAB_TextView_sober);
         SharedPreferences sharedPreferences = getSharedPreferences(Const.PREFS_NAME, Context.MODE_PRIVATE);
@@ -75,12 +81,13 @@ public class BeersActivity extends AppCompatActivity {
         fabAddBeer.setOnClickListener(v -> {
             fabAddBeer.setEnabled(false);
             fabAddBeer.setImageResource(R.drawable.ico_hourglass);
-            AddBeerDialogFragment.newInstanceAddMode(pubVisit).show(fragmentManager, AddBeerDialogFragment.TAG);
+            AddBeerDialogFragment.newInstanceAddMode(pubVisitID).show(fragmentManager, AddBeerDialogFragment.TAG);
         });
 
         layoutManager.scrollToPosition(adBeers.getItemCount() - 1);
 
         updateBottomAppBarInfo();
+        hasAnythingChanged = false; // Must be called after `updateBottomAppBarInfo()` cause that sets it to true :—)
     }
 
     public void enableFAB() {
@@ -89,21 +96,21 @@ public class BeersActivity extends AppCompatActivity {
     }
 
     public void addBeer(Beer b) {
-        long id = db.addBeer(b, pubVisit);
+        long id = db.addBeer(b);
         b.setId(id);
         int rvPos = adBeers.addBeer(b);
         layoutManager.scrollToPosition(rvPos);
         updateBottomAppBarInfo();
     }
 
-    public void editBeer(long id, Beer newB, int priceChange, int rvPos) {
-        db.editBeer(id, newB, priceChange, pubVisit);
+    public void editBeer(long id, Beer newB, int rvPos) {
+        db.editBeer(id, newB);
         adBeers.editBeer(newB, rvPos);
         updateBottomAppBarInfo();
     }
 
     public void deleteBeer(Beer b, int rvPos) {
-        db.deleteBeer(b, pubVisit);
+        db.deleteBeer(b);
         adBeers.deleteBeer(rvPos);
         updateBottomAppBarInfo();
     }
@@ -111,8 +118,30 @@ public class BeersActivity extends AppCompatActivity {
     private void updateBottomAppBarInfo() {
         textViewNBeers.setText(adBeers.getItemCount() + " piv");
         PubVisitInfoCrate crate = Calc.getPubVisitInfo(adBeers, userWeight, isUserMale);
-        textViewTotalPrice.setText(crate.totalCost + " Kč");
+        textViewTotalCost.setText(crate.totalCost + " Kč");
         textViewPermille.setText(crate.permille + " promile");
         textViewSober.setText(crate.sober + " po posledním pivu");
+        totalCost = crate.totalCost;
+        hasAnythingChanged = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        int totalBeers = adBeers.getItemCount();
+        SharedPreferences sharedPreferences2 = getSharedPreferences(Const.PREFS2_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sharedPreferences2.edit();
+        editor2.putBoolean(Const.PREFS2_KEY_IS_UPDATE_NECESSARY, hasAnythingChanged);
+        editor2.putInt(Const.PREFS2_KEY_PUB_VISIT_RV_POS, pubVisitRvPos);
+        editor2.putInt(Const.PREFS2_KEY_TOTAL_BEERS, totalBeers);
+        editor2.putInt(Const.PREFS2_KEY_TOTAL_COST, totalCost);
+        editor2.apply();
+        db.editPubVisitTotals(pubVisitID, totalBeers, totalCost);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
     }
 }

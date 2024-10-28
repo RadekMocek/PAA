@@ -64,23 +64,18 @@ public class DatabaseManager {
         db.update(DatabaseHelper.TABLE_VISITS, cv, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
+    public void editPubVisitTotals(long id, int totalBeers, int totalCost) {
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseHelper.COL_TOTAL_BEERS, totalBeers);
+        cv.put(DatabaseHelper.COL_TOTAL_COST, totalCost);
+        db.update(DatabaseHelper.TABLE_VISITS, cv, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
+    }
+
     public void deletePubVisit(long id) {
         String[] whereArgs = new String[]{String.valueOf(id)};
         db.delete(DatabaseHelper.TABLE_VISITS, DatabaseHelper.COL_ID + " = ?", whereArgs);
         // Cascade
         db.delete(DatabaseHelper.TABLE_BEERS, DatabaseHelper.COL_VISIT_ID + " = ?", whereArgs);
-    }
-
-    private void updatePubVisitTotals(Beer b, PubVisit p, boolean addOrSubtract) {
-        int multiplier = (addOrSubtract) ? 1 : -1;
-        int newTotalBeers = p.getTotalBeers() + multiplier;
-        int newTotalCost = p.getTotalCost() + (b.getPrice() * multiplier);
-        ContentValues cvPV = new ContentValues();
-        cvPV.put(DatabaseHelper.COL_TOTAL_BEERS, newTotalBeers);
-        cvPV.put(DatabaseHelper.COL_TOTAL_COST, newTotalCost);
-        db.update(DatabaseHelper.TABLE_VISITS, cvPV, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(p.getId())});
-        p.setTotalBeers(newTotalBeers);
-        p.setTotalCost(newTotalCost);
     }
 
     // Beers
@@ -110,8 +105,7 @@ public class DatabaseManager {
         return collection;
     }
 
-    public long addBeer(Beer b, PubVisit p) {
-        // Prepare Beer
+    public long addBeer(Beer b) {
         ContentValues cvB = new ContentValues();
         cvB.put(DatabaseHelper.COL_VISIT_ID, b.getPubVisitID());
         cvB.put(DatabaseHelper.COL_NAME, b.getBreweryName());
@@ -121,34 +115,21 @@ public class DatabaseManager {
         cvB.put(DatabaseHelper.COL_EPM, b.getEPM());
         cvB.put(DatabaseHelper.COL_ABV, b.getABV());
         cvB.put(DatabaseHelper.COL_PRICE, b.getPrice());
-        // Edit totals in TABLE_VISITS
-        updatePubVisitTotals(b, p, true);
-        // Add Beer to TABLE_BEERS
         return db.insert(DatabaseHelper.TABLE_BEERS, null, cvB);
     }
 
-    public void editBeer(long id, Beer newB, int priceChange, PubVisit p) {
-        // Edit total price in TABLE_VISITS
-        if (priceChange != 0) {
-            int newTotalCost = p.getTotalCost() + priceChange;
-            ContentValues cvPV = new ContentValues();
-            cvPV.put(DatabaseHelper.COL_TOTAL_COST, newTotalCost);
-            db.update(DatabaseHelper.TABLE_VISITS, cvPV, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(p.getId())});
-            p.setTotalCost(newTotalCost);
-        }
-        // Edit beer
+    public void editBeer(long id, Beer newB) {
         ContentValues cvB = new ContentValues();
         cvB.put(DatabaseHelper.COL_NAME, newB.getBreweryName());
         cvB.put(DatabaseHelper.COL_DESCRIPTION, newB.getDescription());
         cvB.put(DatabaseHelper.COL_DECILITRES, newB.getDecilitres());
         cvB.put(DatabaseHelper.COL_EPM, newB.getEPM());
         cvB.put(DatabaseHelper.COL_ABV, newB.getABV());
-        if (priceChange != 0) cvB.put(DatabaseHelper.COL_PRICE, newB.getPrice());
+        cvB.put(DatabaseHelper.COL_PRICE, newB.getPrice());
         db.update(DatabaseHelper.TABLE_BEERS, cvB, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
-    public void deleteBeer(Beer b, PubVisit p) {
-        updatePubVisitTotals(b, p, false);
+    public void deleteBeer(Beer b) {
         db.delete(DatabaseHelper.TABLE_BEERS, DatabaseHelper.COL_ID + " = ?", new String[]{String.valueOf(b.getId())});
     }
 }

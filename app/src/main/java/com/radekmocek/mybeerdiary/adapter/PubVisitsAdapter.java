@@ -1,5 +1,7 @@
 package com.radekmocek.mybeerdiary.adapter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.activity.MainActivity;
 import com.radekmocek.mybeerdiary.fragment.EditPubVisitDialogFragment;
 import com.radekmocek.mybeerdiary.model.PubVisit;
+import com.radekmocek.mybeerdiary.util.Const;
 import com.radekmocek.mybeerdiary.util.Conv;
 import com.radekmocek.mybeerdiary.util.DatabaseManager;
 
@@ -53,7 +56,7 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
         holder.totals.setText(item.getTotalBeers() + " piv, " + item.getTotalCost() + " Kč");
 
         // Events
-        holder.itemView.setOnClickListener(v -> mainActivity.changeToBeersActivity(item));
+        holder.itemView.setOnClickListener(v -> mainActivity.changeToBeersActivity(item, position));
         holder.itemView.setOnLongClickListener(v -> {
             EditPubVisitDialogFragment.newInstance(item, position).show(fragmentManager, EditPubVisitDialogFragment.TAG);
             return true;
@@ -98,6 +101,20 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public void handleReturnFromBeersActivity(Context context) {
+        SharedPreferences sharedPreferences2 = context.getSharedPreferences(Const.PREFS2_NAME, Context.MODE_PRIVATE);
+        boolean isUpdateNecessary = sharedPreferences2.getBoolean(Const.PREFS2_KEY_IS_UPDATE_NECESSARY, false);
+        if (isUpdateNecessary) {
+            int rvPos = sharedPreferences2.getInt(Const.PREFS2_KEY_PUB_VISIT_RV_POS, -1);
+            if (rvPos >= 0 && rvPos < collection.size()) {
+                PubVisit p = collection.get(rvPos);
+                p.setTotalBeers(sharedPreferences2.getInt(Const.PREFS2_KEY_TOTAL_BEERS, p.getTotalBeers()));
+                p.setTotalCost(sharedPreferences2.getInt(Const.PREFS2_KEY_TOTAL_COST, p.getTotalCost()));
+                notifyItemChanged(rvPos);
+            }
+        }
     }
 
     // Data manipulation functions

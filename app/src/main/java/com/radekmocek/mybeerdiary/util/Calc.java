@@ -46,10 +46,10 @@ public final class Calc {
         long lastTimestamp = beers.get(beers.size() - 1).getTimestamp();
         long duration = lastTimestamp - firstTimestamp;
 
-        int totalPrice = 0;
+        int totalCost = 0;
         double gramsOfAlcohol = 0d;
         for (Beer b : beers) {
-            totalPrice += b.getPrice();
+            totalCost += b.getPrice();
             gramsOfAlcohol += ((b.getDecilitres() / 10d) * b.getABV() * 789.45d) / 100d;
         }
 
@@ -61,7 +61,7 @@ public final class Calc {
         int minutes = (int) ((remainingHours - hours) * 60);
         String soberIn = hours + "h" + minutes + "m";
 
-        return new PubVisitInfoCrate(totalPrice, fitDoubleToTwoIntAndTwoFractionPlacesPositive(permille), soberIn);
+        return new PubVisitInfoCrate(totalCost, fitDoubleToTwoIntAndTwoFractionPlacesPositive(permille), soberIn);
     }
 
 }

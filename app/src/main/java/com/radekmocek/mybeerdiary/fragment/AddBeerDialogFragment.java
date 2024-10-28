@@ -25,7 +25,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.activity.BeersActivity;
 import com.radekmocek.mybeerdiary.model.Beer;
-import com.radekmocek.mybeerdiary.model.PubVisit;
 import com.radekmocek.mybeerdiary.util.Const;
 import com.radekmocek.mybeerdiary.util.Conv;
 import com.radekmocek.mybeerdiary.util.DecimalDigitsInputFilter;
@@ -41,12 +40,12 @@ public class AddBeerDialogFragment extends DialogFragment {
     private static final String beerBundleKey = "beer";
     private static final String rvPosBundleKey = "recyclerViewPosition";
 
-    public static AddBeerDialogFragment newInstanceAddMode(PubVisit p) {
+    public static AddBeerDialogFragment newInstanceAddMode(long pubVisitID) {
         AddBeerDialogFragment f = new AddBeerDialogFragment();
 
         Bundle args = new Bundle();
         args.putBoolean(isEditModeBundleKey, false);
-        args.putLong(pubVisitIDBundleKey, p.getId());
+        args.putLong(pubVisitIDBundleKey, pubVisitID);
         f.setArguments(args);
 
         return f;
@@ -232,7 +231,7 @@ public class AddBeerDialogFragment extends DialogFragment {
             } else {
                 //newB.setPubVisitID(b.getPubVisitID());
                 //newB.setTimestamp(b.getTimestamp());
-                beersActivity.editBeer(b.getId(), newB, price - b.getPrice(), rvPos);
+                beersActivity.editBeer(b.getId(), newB, rvPos);
             }
 
             dismiss();

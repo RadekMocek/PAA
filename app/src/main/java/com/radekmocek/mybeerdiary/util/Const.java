@@ -21,4 +21,14 @@ public final class Const {
     public static final boolean PREFS_DEFAULT_IS_MALE = true;
     public static final String PREFS_KEY_WEIGHT = "weight";
     public static final int PREFS_DEFAULT_WEIGHT = 80;
+
+    public static final String INTENT_EXTRAS_KEY_PUB_VISIT_ID = "pubVisitID";
+    public static final String INTENT_EXTRAS_KEY_PUB_VISIT_NAME = "pubVisitName";
+    public static final String INTENT_EXTRAS_KEY_PUB_VISIT_RV_POS = "pubVisitRvPos";
+
+    public static final String PREFS2_NAME = "ReturnFromBeersActivityUpdateHack";
+    public static final String PREFS2_KEY_IS_UPDATE_NECESSARY = "isUpdateNecessary";
+    public static final String PREFS2_KEY_PUB_VISIT_RV_POS = "pubVisitRvPos";
+    public static final String PREFS2_KEY_TOTAL_BEERS = "totalBeers";
+    public static final String PREFS2_KEY_TOTAL_COST = "totalCost";
 }

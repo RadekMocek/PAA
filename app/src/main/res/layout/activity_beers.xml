@@ -52,7 +52,7 @@
                 app:drawableStartCompat="@drawable/ico_beer" />
 
             <TextView
-                android:id="@+id/BAB_TextView_totalPrice"
+                android:id="@+id/BAB_TextView_totalCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/BAB_TextView_nBeers"
@@ -67,7 +67,7 @@
                 android:id="@+id/BAB_TextView_permille"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/BAB_TextView_totalPrice"
+                android:layout_below="@id/BAB_TextView_totalCost"
                 android:layout_marginBottom="5dp"
                 android:drawablePadding="10dp"
                 android:text="4 promile"

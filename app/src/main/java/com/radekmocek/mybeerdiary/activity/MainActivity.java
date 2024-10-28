@@ -14,6 +14,7 @@ import com.radekmocek.mybeerdiary.adapter.PubVisitsAdapter;
 import com.radekmocek.mybeerdiary.fragment.AddPubVisitDialogFragment;
 import com.radekmocek.mybeerdiary.fragment.SettingsDialogFragment;
 import com.radekmocek.mybeerdiary.model.PubVisit;
+import com.radekmocek.mybeerdiary.util.Const;
 import com.radekmocek.mybeerdiary.util.DatabaseManager;
 
 import java.util.Calendar;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private FragmentManager fragmentManager;
     private PubVisitsAdapter adPubVisits;
+
+    private boolean isFirstOnStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.fab_addPubVisit).setOnClickListener(v -> AddPubVisitDialogFragment.newInstance().show(fragmentManager, AddPubVisitDialogFragment.TAG));
 
         findViewById(R.id.iconButtonSettings).setOnClickListener(v -> SettingsDialogFragment.newInstance().show(fragmentManager, SettingsDialogFragment.TAG));
+
+        isFirstOnStart = true;
     }
 
     public void addPubVisit(String name) {
@@ -68,10 +73,22 @@ public class MainActivity extends AppCompatActivity {
         adPubVisits.deletePubVisit(rvPos);
     }
 
-    public void changeToBeersActivity(PubVisit p) {
+    public void changeToBeersActivity(PubVisit p, int pubVisitRvPos) {
         Intent intent = new Intent(this, BeersActivity.class);
-        intent.putExtra("pubVisit", p);
+        intent.putExtra(Const.INTENT_EXTRAS_KEY_PUB_VISIT_ID, p.getId());
+        intent.putExtra(Const.INTENT_EXTRAS_KEY_PUB_VISIT_NAME, p.getPubName());
+        intent.putExtra(Const.INTENT_EXTRAS_KEY_PUB_VISIT_RV_POS, pubVisitRvPos);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (isFirstOnStart) {
+            isFirstOnStart = false;
+        } else {
+            adPubVisits.handleReturnFromBeersActivity(this);
+        }
     }
 
     @Override
