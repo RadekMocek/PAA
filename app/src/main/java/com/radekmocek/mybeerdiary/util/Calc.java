@@ -63,5 +63,4 @@ public final class Calc {
 
         return new PubVisitInfoCrate(totalCost, fitDoubleToTwoIntAndTwoFractionPlacesPositive(permille), soberIn);
     }
-
 }

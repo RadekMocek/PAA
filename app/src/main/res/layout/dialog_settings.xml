@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:text="Nastavení uživatele"
+        android:text="@string/settings_header"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="113dp"
-            android:text="Muž"
+            android:text="@string/settings_option_male"
             app:icon="@drawable/ico_male" />
 
         <Button
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="113dp"
-            android:text="Žena"
+            android:text="@string/settings_option_female"
             app:icon="@drawable/ico_female" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/settings_toggleGroup"
-        android:hint="Hmotnost v kilogramech"
+        android:hint="@string/settings_weight"
         android:paddingHorizontal="12dp"
         app:suffixText="Kg">
 
@@ -66,7 +66,7 @@
         android:layout_below="@id/settings_textFieldWeight"
         android:layout_alignParentEnd="true"
         android:layout_margin="12dp"
-        android:text="Uložit" />
+        android:text="@string/common_button_save" />
 
     <Button
         android:id="@+id/settings_buttonCancel"
@@ -75,6 +75,6 @@
         android:layout_below="@id/settings_textFieldWeight"
         android:layout_marginVertical="12dp"
         android:layout_toStartOf="@id/settings_buttonSave"
-        android:text="Zrušit" />
+        android:text="@string/common_button_cancel" />
 
 </RelativeLayout>

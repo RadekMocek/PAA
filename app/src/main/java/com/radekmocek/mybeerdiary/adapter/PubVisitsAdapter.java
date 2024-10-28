@@ -53,7 +53,8 @@ public class PubVisitsAdapter extends RecyclerView.Adapter<PubVisitsAdapter.View
         // Set item views based on your views and data model
         holder.pubName.setText(item.getPubName());
         holder.timestamp.setText(Conv.longDate2str(item.getTimestamp()));
-        holder.totals.setText(item.getTotalBeers() + " piv, " + item.getTotalCost() + " Kč");
+        //holder.totals.setText(item.getTotalBeers() + " piv, " + item.getTotalCost() + " Kč");
+        holder.totals.setText(holder.itemView.getResources().getString(R.string.itemPubVisit_totals, item.getTotalBeers(), item.getTotalCost()));
 
         // Events
         holder.itemView.setOnClickListener(v -> mainActivity.changeToBeersActivity(item, position));

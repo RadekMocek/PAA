@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:text="Editace návštěvy hospody / akce"
+        android:text="@string/editPubVisit_header"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editPubVisit_header"
-        android:hint="Nový název hospody / akce"
+        android:hint="@string/editPubVisit_name"
         android:paddingHorizontal="12dp">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -36,7 +36,7 @@
         android:layout_below="@id/editPubVisit_textField"
         android:layout_alignParentEnd="true"
         android:layout_margin="12dp"
-        android:text="Přejmenovat" />
+        android:text="@string/common_button_rename" />
 
     <Button
         android:id="@+id/editPubVisit_buttonCancel"
@@ -45,7 +45,7 @@
         android:layout_below="@id/editPubVisit_textField"
         android:layout_marginVertical="12dp"
         android:layout_toStartOf="@id/editPubVisit_buttonOK"
-        android:text="Zrušit" />
+        android:text="@string/common_button_cancel" />
 
     <Button
         android:id="@+id/editPubVisit_buttonDelete"
@@ -53,6 +53,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editPubVisit_textField"
         android:layout_margin="12dp"
-        android:text="Smazat" />
+        android:text="@string/common_button_delete" />
 
 </RelativeLayout>

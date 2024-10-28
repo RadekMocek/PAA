@@ -2,6 +2,7 @@ package com.radekmocek.mybeerdiary.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -120,13 +121,14 @@ public class BeersActivity extends AppCompatActivity {
     }
 
     private void updateBottomAppBarInfoAndDatabaseTotals(boolean updateDatabaseTotals) {
+        Resources res = getResources();
         int totalBeers = adBeers.getItemCount();
 
-        textViewNBeers.setText(totalBeers + " piv");
+        textViewNBeers.setText(res.getString(R.string.bab_nBeers, totalBeers));
         PubVisitInfoCrate crate = Calc.getPubVisitInfo(adBeers, userWeight, isUserMale);
-        textViewTotalCost.setText(crate.totalCost + " Kč");
-        textViewPermille.setText(crate.permille + " promile");
-        textViewSober.setText(crate.sober + " po posledním pivu");
+        textViewTotalCost.setText(res.getString(R.string.common_price, crate.totalCost));
+        textViewPermille.setText(res.getString(R.string.bab_permille, String.valueOf(crate.permille)));
+        textViewSober.setText(res.getString(R.string.bab_sober, String.valueOf(crate.sober)));
         totalCost = crate.totalCost;
         hasAnythingChanged = true;
 

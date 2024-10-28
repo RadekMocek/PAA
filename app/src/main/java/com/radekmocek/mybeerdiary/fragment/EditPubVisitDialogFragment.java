@@ -1,6 +1,7 @@
 package com.radekmocek.mybeerdiary.fragment;
 
 import android.app.AlertDialog;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -52,6 +53,8 @@ public class EditPubVisitDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Resources res = getResources();
+
         Bundle args = getArguments();
         long id;
         int rvPos;
@@ -100,10 +103,10 @@ public class EditPubVisitDialogFragment extends DialogFragment {
         buttonDelete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setCancelable(true);
-            builder.setTitle("Smazat návštěvu hospody / akce?");
-            builder.setMessage("Opravdu si přejete smazat \"" + name + "\"?");
-            builder.setPositiveButton("Smazat", (dialog, which) -> mainActivity.deletePubVisit(id, rvPos));
-            builder.setNegativeButton("Zrušit", (dialog, which) -> {
+            builder.setTitle(res.getString(R.string.alertDialog_headerPubVisit));
+            builder.setMessage(res.getString(R.string.alertDialog_reallyDelete, name));
+            builder.setPositiveButton(res.getString(R.string.common_button_delete), (dialog, which) -> mainActivity.deletePubVisit(id, rvPos));
+            builder.setNegativeButton(res.getString(R.string.common_button_cancel), (dialog, which) -> {
             });
             AlertDialog dialog = builder.create();
             dialog.show();

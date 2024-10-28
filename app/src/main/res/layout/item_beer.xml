@@ -21,7 +21,7 @@
             android:id="@+id/beer_timestamp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="16. 10. 2024 – 21:48"
+            android:text="@string/placeholder"
             android:textSize="13sp" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_below="@id/beer_timestamp"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="3dp"
-            android:text="OVIPISTÁN"
+            android:text="@string/placeholder"
             android:textSize="20.25sp"
             android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/beer_breweryName"
-            android:text="PRZIDENT - světlý ležák"
+            android:text="@string/placeholder"
             android:textSize="17.5sp" />
 
         <com.google.android.material.divider.MaterialDivider
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/beer_divider"
             android:layout_alignParentEnd="true"
-            android:text="12°"
+            android:text="@string/placeholder"
             android:textSize="15.5sp" />
 
         <TextView
@@ -66,14 +66,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/beer_EPM"
             android:layout_alignParentEnd="true"
-            android:text="5.0 %"
+            android:text="@string/placeholder"
             android:textSize="15.5sp" />
 
         <ImageView
             android:id="@+id/beer_ico_decilitres"
             style="@style/BeerItemIcon"
             android:layout_below="@id/beer_divider"
-            android:contentDescription=""
+            android:contentDescription="@string/contentDescription_itemBeer_sizeIcon"
             android:src="@drawable/ico_measure_full" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/beer_divider"
             android:layout_toEndOf="@id/beer_ico_decilitres"
-            android:text="Velké"
+            android:text="@string/placeholder"
             android:textSize="15.5sp" />
 
         <ImageView
@@ -90,7 +90,7 @@
             style="@style/BeerItemIcon"
             android:layout_below="@id/beer_decilitres"
             android:layout_marginStart="1.2dp"
-            android:contentDescription=""
+            android:contentDescription="@string/contentDescription_itemBeer_moneyIcon"
             android:src="@drawable/ico_coins" />
 
         <TextView
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/beer_decilitres"
             android:layout_toEndOf="@id/beer_ico_price"
-            android:text="65 Kč"
+            android:text="@string/placeholder"
             android:textSize="15.5sp" />
 
     </RelativeLayout>

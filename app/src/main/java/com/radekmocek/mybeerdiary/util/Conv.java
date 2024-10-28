@@ -1,5 +1,8 @@
 package com.radekmocek.mybeerdiary.util;
 
+import android.content.res.Resources;
+
+import com.radekmocek.mybeerdiary.R;
 import com.radekmocek.mybeerdiary.model.Beer;
 
 import java.text.DateFormat;
@@ -27,24 +30,34 @@ public final class Conv {
         return date2str(long2date(l));
     }
 
-    public static String nBeerLitres2str(float f) {
-        return nBeerDecilitres2str(Math.round(f * 10));
+    public static String nBeerLitres2str(Resources res, float f) {
+        return nBeerDecilitres2str(res, Math.round(f * 10));
     }
 
-    public static String nBeerDecilitres2str(int decilitres) {
+    public static String nBeerDecilitres2str(Resources res, int decilitres) {
         switch (decilitres) {
             case 1:
-                return "Deci";
+                return res.getString(R.string.beer_size_1dl);
+            case 2:
+                return res.getString(R.string.beer_size_2dl);
             case 3:
-                return "Malé";
+                return res.getString(R.string.beer_size_3dl);
             case 4:
-                return "Čtyřka";
+                return res.getString(R.string.beer_size_4dl);
             case 5:
-                return "Velké";
+                return res.getString(R.string.beer_size_5dl);
+            case 6:
+                return res.getString(R.string.beer_size_6dl);
+            case 7:
+                return res.getString(R.string.beer_size_7dl);
+            case 8:
+                return res.getString(R.string.beer_size_8dl);
+            case 9:
+                return res.getString(R.string.beer_size_9dl);
             case 10:
-                return "Tuplák";
+                return res.getString(R.string.beer_size_10dl);
             default:
-                return decilitres + " deci";
+                return res.getString(R.string.placeholder);
         }
     }
 
@@ -58,10 +71,10 @@ public final class Conv {
         return String.valueOf(Calc.fitDoubleToTwoIntAndTwoFractionPlacesPositive(Calc.EPM2AVG(EPM)));
     }
 
-    public static String beer2str(Beer b) {
-        if (b == null) return "Pivo";
+    public static String beer2str(Resources res, Beer b) {
+        if (b == null) return res.getString(R.string.beer);
         String breweryName = b.getBreweryName();
-        String result = (!breweryName.isEmpty()) ? breweryName : "Pivo";
+        String result = (!breweryName.isEmpty()) ? breweryName : res.getString(R.string.beer);
         String description = b.getDescription();
         if (!description.isEmpty()) result += " " + description;
         if (result.length() > Const.MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS) {

@@ -1,5 +1,6 @@
 package com.radekmocek.mybeerdiary.fragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,8 @@ public class EditBeerDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Resources res = getResources();
+
         Bundle args = getArguments();
         Beer b;
         int rvPos;
@@ -67,7 +70,7 @@ public class EditBeerDialogFragment extends DialogFragment {
         ExtendedFloatingActionButton eFabEdit = view.findViewById(R.id.editBeer_eFabEdit);
         Button buttonDismiss = view.findViewById(R.id.editBeer_buttonDismiss);
 
-        textView.setText(Conv.beer2str(b));
+        textView.setText(Conv.beer2str(res, b));
 
         eFabRepeat.setOnClickListener(v -> {
             if (b != null) {

@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:text="Nová návštěva hospody / akce"
+        android:text="@string/newPubVisit_header"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/newPubVisit_header"
-        android:hint="Název hospody / akce"
+        android:hint="@string/newPubVisit_name"
         android:paddingHorizontal="12dp">
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -36,7 +36,7 @@
         android:layout_below="@id/newPubVisit_textField"
         android:layout_alignParentEnd="true"
         android:layout_margin="12dp"
-        android:text="OK" />
+        android:text="@string/common_button_ok" />
 
     <Button
         android:id="@+id/newPubVisit_buttonCancel"
@@ -45,6 +45,6 @@
         android:layout_below="@id/newPubVisit_textField"
         android:layout_marginVertical="12dp"
         android:layout_toStartOf="@id/newPubVisit_buttonOK"
-        android:text="Zrušit" />
+        android:text="@string/common_button_cancel" />
 
 </RelativeLayout>

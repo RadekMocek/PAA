@@ -1,3 +1,54 @@
 <resources>
     <string name="app_name">My Beer Diary</string>
+    <string name="settings_header">User settings</string>
+    <string name="settings_option_male">Male</string>
+    <string name="settings_option_female">Female</string>
+    <string name="settings_weight">Weight in kilograms</string>
+    <string name="common_button_save">Save</string>
+    <string name="common_button_cancel">Cancel</string>
+    <string name="common_button_ok" translatable="false">OK</string>
+    <string name="common_button_add">Add</string>
+    <string name="common_button_delete">Delete</string>
+    <string name="common_button_close">Close</string>
+    <string name="common_button_confirm">Confirm</string>
+    <string name="common_button_rename">Rename</string>
+    <string name="newPubVisit_header">New pub visit/event</string>
+    <string name="newPubVisit_name">Name of pub/event</string>
+    <string name="editPubVisit_header">Edit pub visit/event</string>
+    <string name="editPubVisit_name">New name of pub/event</string>
+    <string name="placeholder" translatable="false">Placeholder</string>
+    <string name="itemPubVisit_totals">%1$d beers, %2$d CZK</string>
+    <string name="beer_size_1dl">0.1 L</string>
+    <string name="beer_size_2dl">0.2 L</string>
+    <string name="beer_size_3dl">0.3 L</string>
+    <string name="beer_size_4dl">0.4 L</string>
+    <string name="beer_size_5dl">0.5 L</string>
+    <string name="beer_size_6dl">0.6 L</string>
+    <string name="beer_size_7dl">0.7 L</string>
+    <string name="beer_size_8dl">0.8 L</string>
+    <string name="beer_size_9dl">0.9 L</string>
+    <string name="beer_size_10dl">1.0 L</string>
+    <string name="contentDescription_itemBeer_sizeIcon">Beer measure icon</string>
+    <string name="contentDescription_itemBeer_moneyIcon">Money icon</string>
+    <string name="common_price">%1$d CZK</string>
+    <string name="common_epm">%1$s°</string>
+    <string name="common_abv">%1$s%%</string>
+    <string name="bab_nBeers">%1$d beers</string>
+    <string name="bab_permille">%1$s per mille</string>
+    <string name="bab_sober">%1$s after last beer</string>
+    <string name="common_button_edit">Edit</string>
+    <string name="common_button_repeat">Repeat</string>
+    <string name="newBeer_header">Add another beer</string>
+    <string name="newBeer_breweryName">Name of the brewery</string>
+    <string name="newBeer_description">Name/style/description of the beer</string>
+    <string name="contentDescription_newBeer_slider">Beer measure slider</string>
+    <string name="newBeer_epm">° Plato</string>
+    <string name="newBeer_abv">Alcohol %</string>
+    <string name="newBeer_checkbox">Estimate alcohol percentage from degrees Plato</string>
+    <string name="newBeer_price">Price</string>
+    <string name="editBeer_header">Edit beer</string>
+    <string name="beer">Beer</string>
+    <string name="alertDialog_reallyDelete">Do you really wish to delete \"%1$s\"?</string>
+    <string name="alertDialog_headerBeer">Delete beer?</string>
+    <string name="alertDialog_headerPubVisit">Delete pub visit/event?</string>
 </resources>

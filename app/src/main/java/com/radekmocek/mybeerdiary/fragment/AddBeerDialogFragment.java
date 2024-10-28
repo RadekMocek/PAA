@@ -2,6 +2,7 @@ package com.radekmocek.mybeerdiary.fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -78,6 +79,8 @@ public class AddBeerDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Resources res = getResources();
+
         Bundle args = getArguments();
         boolean isEditMode;
         long pubVisitID;
@@ -135,7 +138,7 @@ public class AddBeerDialogFragment extends DialogFragment {
         }
 
         // TextView header/title
-        textViewHeader.setText((!isEditMode) ? "Další pivo" : "Upravit pivo");
+        textViewHeader.setText(res.getString((!isEditMode) ? R.string.newBeer_header : R.string.editBeer_header));
 
         // IconButton – Close the dialog on click; "cancel" (X)
         iconButton.setOnClickListener(v -> dismiss());
@@ -166,7 +169,7 @@ public class AddBeerDialogFragment extends DialogFragment {
 
         // Slider
         slider.addOnChangeListener((slider1, value, fromUser) -> {
-            tgButton2.setText(Conv.nBeerLitres2str(value));
+            tgButton2.setText(Conv.nBeerLitres2str(res, value));
             //tg.check(tgButton2.getId());
         });
         slider.setEnabled(isEditMode);
@@ -188,7 +191,7 @@ public class AddBeerDialogFragment extends DialogFragment {
 
         // Button to confirm adding new beer / editing existing beer
         if (isEditMode) {
-            eFabAdd.setText("Potvrdit");
+            eFabAdd.setText(res.getString(R.string.common_button_confirm));
             eFabAdd.setIconResource(R.drawable.ico_check);
         }
         eFabAdd.setOnClickListener(v -> {
@@ -236,8 +239,6 @@ public class AddBeerDialogFragment extends DialogFragment {
             if (!isEditMode) {
                 beersActivity.addBeer(newB);
             } else {
-                //newB.setPubVisitID(b.getPubVisitID());
-                //newB.setTimestamp(b.getTimestamp());
                 beersActivity.editBeer(b.getId(), newB, rvPos);
             }
 
@@ -251,10 +252,10 @@ public class AddBeerDialogFragment extends DialogFragment {
         eFabDelete.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setCancelable(true);
-            builder.setTitle("Smazat Pivo?");
-            builder.setMessage("Opravdu si přejete smazat \"" + Conv.beer2str(b) + "\"?");
-            builder.setPositiveButton("Smazat", (dialog, which) -> beersActivity.deleteBeer(b, rvPos));
-            builder.setNegativeButton("Zrušit", (dialog, which) -> {
+            builder.setTitle(res.getString(R.string.alertDialog_headerBeer));
+            builder.setMessage(res.getString(R.string.alertDialog_reallyDelete, Conv.beer2str(res, b)));
+            builder.setPositiveButton(res.getString(R.string.common_button_delete), (dialog, which) -> beersActivity.deleteBeer(b, rvPos));
+            builder.setNegativeButton(res.getString(R.string.common_button_cancel), (dialog, which) -> {
             });
             AlertDialog dialog = builder.create();
             dialog.show();

@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:text="Pivo"
+        android:text="@string/placeholder"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -22,7 +22,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="56dp"
-        android:text="Znovu"
+        android:text="@string/common_button_repeat"
         app:icon="@drawable/ico_repeat" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -32,7 +32,7 @@
         android:layout_below="@id/editBeer_header"
         android:layout_marginStart="56dp"
         android:layout_marginTop="9dp"
-        android:text="Upravit"
+        android:text="@string/common_button_edit"
         app:icon="@drawable/ico_edit" />
 
     <Button
@@ -44,6 +44,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="12dp"
-        android:text="Zavřít" />
+        android:text="@string/common_button_close" />
 
 </RelativeLayout>

@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:drawablePadding="10dp"
-                android:text="20 piv"
+                android:text="@string/placeholder"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:drawableStartCompat="@drawable/ico_beer" />
@@ -58,7 +58,7 @@
                 android:layout_below="@id/BAB_TextView_nBeers"
                 android:layout_marginBottom="5dp"
                 android:drawablePadding="10dp"
-                android:text="100 Kč"
+                android:text="@string/placeholder"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:drawableStartCompat="@drawable/ico_coins" />
@@ -70,7 +70,7 @@
                 android:layout_below="@id/BAB_TextView_totalCost"
                 android:layout_marginBottom="5dp"
                 android:drawablePadding="10dp"
-                android:text="4 promile"
+                android:text="@string/placeholder"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:drawableStartCompat="@drawable/ico_permille" />
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/BAB_TextView_permille"
                 android:drawablePadding="10dp"
-                android:text="Za xxhxxm od posledního piva"
+                android:text="@string/placeholder"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:drawableStartCompat="@drawable/ico_sober" />
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="32dp"
-        android:contentDescription="Add new beer"
+        android:contentDescription="@string/newBeer_header"
         android:src="@drawable/ico_add"
         app:fabCustomSize="72dp"
         app:maxImageSize="32dp" />

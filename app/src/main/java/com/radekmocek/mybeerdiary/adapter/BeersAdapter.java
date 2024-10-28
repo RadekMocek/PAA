@@ -1,5 +1,6 @@
 package com.radekmocek.mybeerdiary.adapter;
 
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +48,10 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         Beer item = collection.get(position);
 
         // Set item views based on your views and data model
+        Resources res = holder.itemView.getResources();
+
         String breweryName = item.getBreweryName();
-        holder.breweryName.setText(!breweryName.isEmpty() ? breweryName : "Pivo");
+        holder.breweryName.setText(!breweryName.isEmpty() ? breweryName : res.getString(R.string.beer));
 
         String description = item.getDescription();
         if (!description.isEmpty()) holder.description.setText(description);
@@ -57,7 +60,7 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
         holder.timestamp.setText(Conv.longDate2str(item.getTimestamp()));
 
         int decilitres = item.getDecilitres();
-        holder.decilitres.setText(Conv.nBeerDecilitres2str(decilitres));
+        holder.decilitres.setText(Conv.nBeerDecilitres2str(res, decilitres));
         switch (decilitres) {
             case 3:
                 holder.decilitresIcon.setImageResource(R.drawable.ico_measure);
@@ -70,9 +73,9 @@ public class BeersAdapter extends RecyclerView.Adapter<BeersAdapter.ViewHolder> 
                 break;
         }
 
-        holder.EPM.setText(String.valueOf(item.getEPM()) + "°");
-        holder.ABV.setText(String.valueOf(item.getABV()) + " %");
-        holder.price.setText(String.valueOf(item.getPrice()) + " Kč");
+        holder.EPM.setText(res.getString(R.string.common_epm, String.valueOf(item.getEPM())));
+        holder.ABV.setText(res.getString(R.string.common_abv, String.valueOf(item.getABV())));
+        holder.price.setText(res.getString(R.string.common_price, item.getPrice()));
 
         // Events
         holder.itemView.setOnLongClickListener(v -> {
