@@ -163,12 +163,15 @@ public class AddBeerDialogFragment extends DialogFragment {
         // Slider
         slider.addOnChangeListener((slider1, value, fromUser) -> {
             tgButton2.setText(Conv.nBeerLitres2str(value));
-            tg.check(tgButton2.getId());
+            //tg.check(tgButton2.getId());
         });
+        slider.setEnabled(isEditMode);
         slider.setValue((!isEditMode) ? Const.DEFAULT_SLIDER_LITRES : (b.getDecilitres() / 10f));
 
         // ButtonToggleGroup – default when adding is 0.5l beer, so tick the middle button; when editing it could be anything, so tick the right button
         tg.check((!isEditMode) ? tgButton1.getId() : tgButton2.getId());
+        // Slider is enabled only when right button is ticked
+        tg.addOnButtonCheckedListener((group, checkedId, isChecked) -> slider.setEnabled(checkedId == tgButton2.getId() && isChecked));
 
         // Checkbox
         checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {

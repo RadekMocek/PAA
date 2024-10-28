@@ -86,7 +86,7 @@ public class BeersActivity extends AppCompatActivity {
 
         layoutManager.scrollToPosition(adBeers.getItemCount() - 1);
 
-        updateBottomAppBarInfo();
+        updateBottomAppBarInfoAndDatabaseTotals(false);
         hasAnythingChanged = false; // Must be called after `updateBottomAppBarInfo()` cause that sets it to true :—)
     }
 
@@ -100,35 +100,40 @@ public class BeersActivity extends AppCompatActivity {
         b.setId(id);
         int rvPos = adBeers.addBeer(b);
         layoutManager.scrollToPosition(rvPos);
-        updateBottomAppBarInfo();
+        updateBottomAppBarInfoAndDatabaseTotals(true);
     }
 
     public void editBeer(long id, Beer newB, int rvPos) {
         db.editBeer(id, newB);
         adBeers.editBeer(newB, rvPos);
-        updateBottomAppBarInfo();
+        updateBottomAppBarInfoAndDatabaseTotals(true);
     }
 
     public void deleteBeer(Beer b, int rvPos) {
         db.deleteBeer(b);
         adBeers.deleteBeer(rvPos);
-        updateBottomAppBarInfo();
+        updateBottomAppBarInfoAndDatabaseTotals(true);
     }
 
-    private void updateBottomAppBarInfo() {
-        textViewNBeers.setText(adBeers.getItemCount() + " piv");
+    private void updateBottomAppBarInfoAndDatabaseTotals(boolean updateDatabaseTotals) {
+        int totalBeers = adBeers.getItemCount();
+
+        textViewNBeers.setText(totalBeers + " piv");
         PubVisitInfoCrate crate = Calc.getPubVisitInfo(adBeers, userWeight, isUserMale);
         textViewTotalCost.setText(crate.totalCost + " Kč");
         textViewPermille.setText(crate.permille + " promile");
         textViewSober.setText(crate.sober + " po posledním pivu");
         totalCost = crate.totalCost;
         hasAnythingChanged = true;
+
+        if (updateDatabaseTotals) db.editPubVisitTotals(pubVisitID, totalBeers, totalCost);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         int totalBeers = adBeers.getItemCount();
+
         SharedPreferences sharedPreferences2 = getSharedPreferences(Const.PREFS2_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor2 = sharedPreferences2.edit();
         editor2.putBoolean(Const.PREFS2_KEY_IS_UPDATE_NECESSARY, hasAnythingChanged);
@@ -136,7 +141,6 @@ public class BeersActivity extends AppCompatActivity {
         editor2.putInt(Const.PREFS2_KEY_TOTAL_BEERS, totalBeers);
         editor2.putInt(Const.PREFS2_KEY_TOTAL_COST, totalCost);
         editor2.apply();
-        db.editPubVisitTotals(pubVisitID, totalBeers, totalCost);
     }
 
     @Override
