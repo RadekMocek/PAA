@@ -107,6 +107,8 @@ public class EditPubVisitDialogFragment extends DialogFragment {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setAllCaps(false);
             dismiss();
         });
     }

@@ -63,7 +63,7 @@ public final class Conv {
         String breweryName = b.getBreweryName();
         String result = (!breweryName.isEmpty()) ? breweryName : "Pivo";
         String description = b.getDescription();
-        if (!description.isEmpty()) result += ": " + description;
+        if (!description.isEmpty()) result += " " + description;
         if (result.length() > Const.MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS) {
             result = result.substring(0, Const.MAX_EDIT_BEER_DIALOG_FRAGMENT_HEADER_CHARACTERS - 3) + "...";
         }

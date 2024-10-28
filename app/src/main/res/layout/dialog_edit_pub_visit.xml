@@ -13,21 +13,27 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editPubVisit_editText"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editPubVisit_textField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editPubVisit_header"
-        android:layout_marginHorizontal="12dp"
-        android:autofillHints=""
         android:hint="Nový název hospody / akce"
-        android:inputType="text" />
+        android:paddingHorizontal="12dp">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/editPubVisit_editText"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/editPubVisit_buttonOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editPubVisit_editText"
+        android:layout_below="@id/editPubVisit_textField"
         android:layout_alignParentEnd="true"
         android:layout_margin="12dp"
         android:text="Přejmenovat" />
@@ -36,7 +42,7 @@
         android:id="@+id/editPubVisit_buttonCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editPubVisit_editText"
+        android:layout_below="@id/editPubVisit_textField"
         android:layout_marginVertical="12dp"
         android:layout_toStartOf="@id/editPubVisit_buttonOK"
         android:text="Zrušit" />
@@ -45,7 +51,7 @@
         android:id="@+id/editPubVisit_buttonDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editPubVisit_editText"
+        android:layout_below="@id/editPubVisit_textField"
         android:layout_margin="12dp"
         android:text="Smazat" />
 

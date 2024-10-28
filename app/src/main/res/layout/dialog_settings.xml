@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/settings_header"
@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:text="Nastavení uživatele"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
@@ -18,8 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/settings_header"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="12dp"
         app:selectionRequired="true"
         app:singleSelection="true">
 
@@ -60,14 +60,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/settings_buttonCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/settings_textFieldWeight"
-        android:layout_margin="12dp"
-        android:text="Zrušit" />
-
-    <Button
         android:id="@+id/settings_buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,5 +67,14 @@
         android:layout_alignParentEnd="true"
         android:layout_margin="12dp"
         android:text="Uložit" />
+
+    <Button
+        android:id="@+id/settings_buttonCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/settings_textFieldWeight"
+        android:layout_marginVertical="12dp"
+        android:layout_toStartOf="@id/settings_buttonSave"
+        android:text="Zrušit" />
 
 </RelativeLayout>

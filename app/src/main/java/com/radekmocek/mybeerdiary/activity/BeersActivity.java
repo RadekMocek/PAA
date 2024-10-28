@@ -79,8 +79,7 @@ public class BeersActivity extends AppCompatActivity {
 
         fabAddBeer = findViewById(R.id.fab_addBeer);
         fabAddBeer.setOnClickListener(v -> {
-            fabAddBeer.setEnabled(false);
-            fabAddBeer.setImageResource(R.drawable.ico_hourglass);
+            changeFABState(false);
             AddBeerDialogFragment.newInstanceAddMode(pubVisitID).show(fragmentManager, AddBeerDialogFragment.TAG);
         });
 
@@ -90,9 +89,14 @@ public class BeersActivity extends AppCompatActivity {
         hasAnythingChanged = false; // Must be called after `updateBottomAppBarInfo()` cause that sets it to true :—)
     }
 
-    public void enableFAB() {
-        fabAddBeer.setEnabled(true);
-        fabAddBeer.setImageResource(R.drawable.ico_add);
+    public void changeFABState(boolean enabledOrLoading) {
+        if (enabledOrLoading) {
+            fabAddBeer.setEnabled(true);
+            fabAddBeer.setImageResource(R.drawable.ico_add);
+        } else {
+            fabAddBeer.setEnabled(false);
+            fabAddBeer.setImageResource(R.drawable.ico_hourglass);
+        }
     }
 
     public void addBeer(Beer b) {

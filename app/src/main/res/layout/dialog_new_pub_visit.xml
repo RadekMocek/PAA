@@ -13,21 +13,27 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/newPubVisit_editText"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newPubVisit_textField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/newPubVisit_header"
-        android:layout_marginHorizontal="12dp"
-        android:autofillHints=""
         android:hint="Název hospody / akce"
-        android:inputType="text" />
+        android:paddingHorizontal="12dp">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/newPubVisit_editText"
+            style="@style/Widget.Material3.TextInputEditText.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/newPubVisit_buttonOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/newPubVisit_editText"
+        android:layout_below="@id/newPubVisit_textField"
         android:layout_alignParentEnd="true"
         android:layout_margin="12dp"
         android:text="OK" />
@@ -36,7 +42,7 @@
         android:id="@+id/newPubVisit_buttonCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/newPubVisit_editText"
+        android:layout_below="@id/newPubVisit_textField"
         android:layout_marginVertical="12dp"
         android:layout_toStartOf="@id/newPubVisit_buttonOK"
         android:text="Zrušit" />

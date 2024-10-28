@@ -108,6 +108,7 @@ public class AddBeerDialogFragment extends DialogFragment {
 
         BeersActivity beersActivity = (BeersActivity) requireActivity();
 
+        TextView textViewHeader = view.findViewById(R.id.newBeer_header);
         Button iconButton = view.findViewById(R.id.newBeer_iconButton);
         MaterialAutoCompleteTextView editTextBreweryName = view.findViewById(R.id.newBeer_editTextBreweryName);
         EditText editTextDescription = view.findViewById(R.id.newBeer_editTextDescription);
@@ -132,6 +133,9 @@ public class AddBeerDialogFragment extends DialogFragment {
             editTextABV.setText(String.valueOf(b.getABV()));
             editTextPrice.setText(String.valueOf(b.getPrice()));
         }
+
+        // TextView header/title
+        textViewHeader.setText((!isEditMode) ? "Další pivo" : "Upravit pivo");
 
         // IconButton – Close the dialog on click; "cancel" (X)
         iconButton.setOnClickListener(v -> dismiss());
@@ -254,6 +258,8 @@ public class AddBeerDialogFragment extends DialogFragment {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setAllCaps(false);
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setAllCaps(false);
             dismiss();
         });
     }
@@ -261,6 +267,6 @@ public class AddBeerDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
-        ((BeersActivity) requireActivity()).enableFAB();
+        ((BeersActivity) requireActivity()).changeFABState(true);
     }
 }
