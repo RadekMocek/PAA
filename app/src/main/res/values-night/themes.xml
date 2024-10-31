@@ -1,7 +1,28 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+
     <!-- Base application theme. -->
     <style name="Base.Theme.MyBeerDiary" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+        <item name="colorPrimary">@color/clrPrimaryDARK</item>
+        <item name="colorPrimaryContainer">@color/clrOnCont</item>
+        <item name="colorOnPrimaryContainer">@color/clrCont</item>
+        <item name="colorSecondaryContainer">@color/clrOnCont</item>
+        <item name="colorOnSecondaryContainer">@color/clrCont</item>
+
+        <item name="android:textColorPrimary">@color/clrTextDARK</item>
+        <item name="android:textColor">@color/clrTextDARK</item>
+        <item name="tint">@color/clrTextDARK</item>
+        <item name="colorOutline">@color/clrTextDARK</item>
+        <item name="colorOnSurfaceVariant">@color/clrTextDARK</item>
+        <item name="colorOutlineVariant">@color/clrTextDARK</item>
+        <item name="drawableTint">@color/clrTextDARK</item>
+
+        <item name="tintNavigationIcon">@color/clrBRUH</item>
+        <item name="android:colorForeground">@color/clrBRUH</item>
+        <item name="android:tint">@color/clrBRUH</item>
+
     </style>
+
 </resources>

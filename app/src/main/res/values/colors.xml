@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <color name="clrPrimary">#d97700</color>
+    <color name="clrCont">#f5ddb1</color>
+    <color name="clrOnCont">#5d2700</color>
+    <color name="clrBg">#fffefb</color>
+
+    <color name="clrPrimaryDARK">#d75e12</color>
+    <color name="clrTextDARK">#d0ccc4</color>
+    <color name="clrBRUH">#FF0000</color>
+
 </resources>

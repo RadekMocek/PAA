@@ -1,9 +1,20 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
+
     <!-- Base application theme. -->
     <style name="Base.Theme.MyBeerDiary" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="colorPrimary">@color/clrPrimary</item>
+        <item name="colorPrimaryContainer">@color/clrCont</item>
+        <item name="colorOnPrimaryContainer">@color/clrOnCont</item>
+        <item name="colorSecondaryContainer">@color/clrCont</item>
+        <item name="colorOnSecondaryContainer">@color/clrOnCont</item>
+        <item name="android:colorBackground">@color/clrBg</item>
+        <item name="colorSurface">@color/clrBg</item>
+
     </style>
 
     <style name="Theme.MyBeerDiary" parent="Base.Theme.MyBeerDiary" />
+
 </resources>
