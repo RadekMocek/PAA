@@ -2,6 +2,8 @@
 
 <resources>
 
+    <color name="clrNOTHING">#00FF0000</color>
+
     <color name="clrPrimary">#d97700</color>
     <color name="clrCont">#f5ddb1</color>
     <color name="clrOnCont">#5d2700</color>

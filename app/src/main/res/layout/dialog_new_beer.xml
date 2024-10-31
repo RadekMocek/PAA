@@ -78,23 +78,25 @@
         android:layout_below="@id/newBeer_divider_0"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="13dp"
+        android:maxWidth="1dp"
         app:selectionRequired="true"
         app:singleSelection="true">
 
         <Button
             android:id="@+id/newBeer_toggleGroup_0"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="130dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="@string/beer_size_3dl"
             app:icon="@drawable/ico_measure" />
 
         <Button
             android:id="@+id/newBeer_toggleGroup_1"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:minWidth="130dp"
             android:text="@string/beer_size_5dl"
             app:icon="@drawable/ico_measure_full" />
@@ -102,8 +104,9 @@
         <Button
             android:id="@+id/newBeer_toggleGroup_2"
             style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:minWidth="130dp"
             android:text="@string/beer_size_4dl"
             app:icon="@drawable/ico_measure_slider" />
@@ -118,7 +121,9 @@
         android:contentDescription="@string/contentDescription_newBeer_slider"
         android:stepSize="0.1"
         android:valueFrom="0.1"
-        android:valueTo="1.0" />
+        android:valueTo="1.0"
+        app:tickColor="@color/clrNOTHING"
+        app:trackColorInactive="@color/clrTextDARK" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/newBeer_divider_1"
